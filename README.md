@@ -10,7 +10,9 @@
 
 ## Current Working Directory
 
-![Directory Tree](https://user-images.githubusercontent.com/52620158/89940283-e1088c80-dc36-11ea-9ebb-0d09fcd49bf1.png)
+The root directory of this repository is named `teastore` having the following path:
+
+`$GOPATH/src/github.com/<username>/teaStore/`
 
 ## Running the project
 
