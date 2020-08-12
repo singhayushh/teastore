@@ -3,6 +3,7 @@ package controllers
 import (
 	"fmt"
 	"log"
+	"teastore/api/models"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
@@ -17,8 +18,8 @@ type Server struct {
 	Router *gin.Engine
 }
 
-// Init here, is the core function which initializes connection to the db
-func (server *Server) Init(DbName, DbUser, DbPass, DbType, DbHost, DbPort string) {
+// InitDB is the core function which initializes connection to the db
+func (server *Server) InitDB(DbName, DbUser, DbPass, DbType, DbHost, DbPort string) {
 	var err error
 
 	// This is the format used to connect to Postgres via gorm
@@ -35,21 +36,21 @@ func (server *Server) Init(DbName, DbUser, DbPass, DbType, DbHost, DbPort string
 	}
 
 	// Models to be placed in automigrate() params
-	server.DB.Debug().AutoMigrate()
+	server.DB.Debug().AutoMigrate(&models.User{})
 }
 
-// Run starts the backend server and configures html rendering
-func (server *Server) Run(Port string) {
+// InitServer starts the backend server and configures html rendering
+func (server *Server) InitServer(Port string) {
 	server.Router = gin.New()
 
 	// Load HTML and Static files
 	server.Router.LoadHTMLGlob("templates/*.html")
 	server.Router.Static("/css", "templates/css")
 
+	// GOTO routes.go/initRoutes()
 	server.initRoutes()
 
 	// Running the server
 	fmt.Printf("Listening to port %s", Port)
-
 	server.Router.Run(Port)
 }

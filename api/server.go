@@ -18,7 +18,7 @@ func Run() {
 		log.Fatal("Couldn't access environmental variables")
 	}
 
-	server.Init(os.Getenv("db_name"), os.Getenv("db_user"), os.Getenv("db_pass"), os.Getenv("db_type"), os.Getenv("db_host"), os.Getenv("db_port"))
+	server.InitDB(os.Getenv("db_name"), os.Getenv("db_user"), os.Getenv("db_pass"), os.Getenv("db_type"), os.Getenv("db_host"), os.Getenv("db_port"))
 
-	server.Run(os.Getenv("port"))
+	server.InitServer(os.Getenv("port"))
 }
