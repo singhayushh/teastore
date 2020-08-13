@@ -17,3 +17,10 @@ func RenderHome(c *gin.Context) {
 		"title": "Gin is cool",
 	})
 }
+
+// RenderProfile renders the profile page for a get request on "/profile" route
+func RenderProfile(c *gin.Context) {
+	c.HTML(200, "temp2.html", gin.H{
+		"title": "Logged in?",
+	})
+}

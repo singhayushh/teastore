@@ -8,6 +8,10 @@ html, body {
     width: 100%;
     background-color: #303f42;
     font-family: consolas;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
 }
 
 h1 {

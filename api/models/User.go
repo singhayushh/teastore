@@ -15,11 +15,11 @@ import (
 // User model
 type User struct {
 	ID        uint64    `gorm:"primary_key;auto_increment" json:"id"`
-	Type      string    `gorm:"size:15;default:Customer" json:"type"` // Either an Admin or Customer(by default)
-	Name      string    `gorm:"size:255;not null;unique" json:"name"`
+	Type      string    `gorm:"size:15;default:'Customer'" json:"type"` // Either an Admin or Customer(by default)
+	Name      string    `gorm:"size:255;not null;" json:"name"`
 	Email     string    `gorm:"size:100;not null;unique" json:"email"`
 	Password  string    `gorm:"size:100;not null;" json:"password"`
-	Address   string    `gorm:"default:null" json:"address"`
+	Address   string    `gorm:"default:'Blank'" json:"address"`
 	CreatedAt time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`
 	UpdatedAt time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at"`
 }
@@ -80,9 +80,6 @@ func (user *User) Validate(action string) error {
 		}
 		return nil
 	default:
-		if user.Type == "" {
-			return errors.New("API: Type is required")
-		}
 		if user.Name == "" {
 			return errors.New("Name is required")
 		}
