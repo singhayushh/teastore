@@ -13,14 +13,22 @@ func Ping(c *gin.Context) {
 
 // RenderHome renders the home page for a get request on "/" route
 func RenderHome(c *gin.Context) {
-	c.HTML(200, "temp.html", gin.H{
+	c.HTML(200, "index.html", gin.H{
 		"title": "Gin is cool",
+	})
+
+}
+
+// RenderRegister ...
+func RenderRegister(c *gin.Context) {
+	c.HTML(200, "register.html", gin.H{
+		"title": "Tea Store | Register",
 	})
 }
 
-// RenderProfile renders the profile page for a get request on "/profile" route
-func RenderProfile(c *gin.Context) {
-	c.HTML(200, "temp2.html", gin.H{
-		"title": "Logged in?",
+// RenderLogin ...
+func RenderLogin(c *gin.Context) {
+	c.HTML(200, "login.html", gin.H{
+		"title": "Tea Store | Login",
 	})
 }
