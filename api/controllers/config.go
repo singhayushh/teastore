@@ -36,23 +36,22 @@ func (server *Server) InitDB(DbName, DbUser, DbPass, DbType, DbHost, DbPort stri
 	}
 
 	// Models to be placed in automigrate() params
-	server.DB.Debug().AutoMigrate(&models.User{})
+	server.DB.Debug().AutoMigrate(&models.User{}, &models.Product{}, &models.Blog{})
 
 }
 
 // InitServer starts the backend server and configures html rendering
 func (server *Server) InitServer(Port string) {
-	gin.SetMode(gin.ReleaseMode)
 	server.Router = gin.New()
 
 	// GOTO routes.go/initRoutes()
 	server.initRoutes()
 
 	// Load HTML and Static files
-	server.Router.LoadHTMLGlob("templates/*.html")
-	server.Router.Static("/css", "templates/css")
+	server.Router.LoadHTMLGlob("views/*.html")
+	server.Router.Static("/css", "views/css")
 
 	// Running the server
-	fmt.Printf("Listening to port %s", Port)
+	fmt.Println("Listening to port", Port)
 	server.Router.Run(Port)
 }
