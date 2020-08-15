@@ -3,9 +3,7 @@ package auth
 import (
 	"errors"
 	"fmt"
-	"math/rand"
-	"os"
-	"strings"
+	"teastore/api/utils"
 
 	"github.com/gomodule/redigo/redis"
 )
@@ -20,24 +18,13 @@ func RedisConnect() redis.Conn {
 	return conn
 }
 
-// A local utility function to generate unsigned hash string of @length bits
-func getHash(length int) string {
-	characters := []rune("ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "abcdefghijklmnopqrstuvwxyz" + "0123456789" + "({[$.`!~-/&#%@]})" + os.Getenv("secret_key"))
-	var b strings.Builder
-	for i := 0; i < length; i++ {
-		b.WriteRune(characters[rand.Intn(len(characters))])
-	}
-
-	return b.String()
-}
-
 // CreateSession is for creating a new user session
-func CreateSession(email string) (string, error) {
+func CreateSession(uid uint64, utype string) (string, error) {
 	conn := RedisConnect()
 	defer conn.Close()
 
-	HashedString := getHash(32)
-	_, err := conn.Do("MSET", "session_id:"+HashedString, "email:"+email)
+	HashedString := utils.GenerateHash(32)
+	_, err := conn.Do("HMSET", "session_id:"+HashedString, "uid", uid, "type", utype)
 
 	if err != nil {
 		return "", err
@@ -47,15 +34,23 @@ func CreateSession(email string) (string, error) {
 }
 
 // CheckSession tries to find the user in the redis database and returns an error if not found
-func CheckSession(sessionID string) (string, error) {
+func CheckSession(sessionID string) (uint64, string, error) {
 	conn := RedisConnect()
 	defer conn.Close()
 
 	reply, err := redis.Int(conn.Do("EXISTS", "session_id:"+sessionID))
 
 	if err == nil && reply > 0 {
-		return "", nil
+		uid, err := redis.Uint64(conn.Do("HGET", "session_id:"+sessionID, "uid"))
+		if err != nil {
+			return 0, "", err
+		}
+		utype, err := redis.String(conn.Do("HGET", "session_id:"+sessionID, "type"))
+		if err != nil {
+			return 0, "", err
+		}
+		return uid, utype, nil
 	}
 
-	return "Good", errors.New("Session not found")
+	return 0, "", errors.New("Session not found")
 }
