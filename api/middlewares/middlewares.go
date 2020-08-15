@@ -1,30 +1,51 @@
 package middlewares
 
 import (
-	"fmt"
 	"teastore/api/auth"
 
 	"github.com/gin-gonic/gin"
 )
 
 // AuthenticationMiddleware checks whether user is signed in or not.
-func AuthenticationMiddleware() gin.HandlerFunc {
+func AuthenticationMiddleware(role string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		SessionID, err := c.Cookie("session_id")
 		if err != nil {
 			c.JSON(401, gin.H{"error": "Error accessing cookie"})
-			fmt.Println(err)
 			c.Abort()
 			return
 		}
 
-		Email, err := auth.CheckSession(SessionID)
+		uid, utype, err := auth.CheckSession(SessionID)
 		if err != nil {
 			c.JSON(401, gin.H{"error": "Dead Session"})
 			c.Abort()
 			return
 		}
-		fmt.Println(Email)
+		if role == "admin" && utype != role {
+			c.JSON(401, gin.H{"error": "Not Admin"})
+			c.Abort()
+			return
+		}
+		c.Set("uid", uid)
 		c.Next()
+	}
+}
+
+// PasserMiddleware is the opposite of AuthenticationMiddleware
+func PasserMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		SessionID, err := c.Cookie("session_id")
+		if err != nil {
+			c.Next()
+		}
+
+		_, _, err = auth.CheckSession(SessionID)
+		if err != nil {
+			c.Next()
+		} else {
+			c.JSON(401, gin.H{"error": "You are already logged in"})
+			c.Abort()
+		}
 	}
 }
