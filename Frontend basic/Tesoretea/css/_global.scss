@@ -1,0 +1,577 @@
+@import "./variable";
+@import "./mixin";
+
+/*  Hero HEADER */
+.hero__header{
+    height: 500px;
+    background-image: url(../img/pngtree-purple-watercolor-flowers-lace-floral-frame-main-illustration-background-image_159577.jpg);
+    background-position: center;
+    background-size: cover;
+
+    .hero__text {
+        display: flex;
+        justify-content: center;
+        transform: translateY(10rem);
+        color: $orange;
+
+    }
+}
+
+body {
+    overflow-x: hidden;
+}
+
+
+/*  COUNT SECTION*/
+
+.count__section  {
+    margin-top: 100px;
+    margin-bottom: 100px;
+    color: $brown;
+
+    p{
+        @include para();
+    }
+
+}
+
+@media (max-width: 770px) {
+    .count__section .count {
+        padding-bottom: 50px;
+    }
+}
+
+
+
+
+
+
+
+/* =============ABOUT SECTION ======  */
+.about__section {
+    padding-top: 50px;
+
+    a{
+        text-decoration: none;
+        color: $black;
+        font-weight: 500;
+        font-size: 20px;
+
+        &:hover {
+            color: $brown;
+        }
+    }
+
+    .about__us {
+        padding-top: 50px;
+        color: $brown;
+
+        p{
+            @include para();
+        }
+    }
+
+    .source {
+        padding-top: 50px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ============================ CONTACT SECTION ==========================  */
+
+.contact__section {
+    padding-top: 50px;
+    padding-bottom: 50px;
+
+    a{
+        text-decoration: none;
+        color: $black;
+        font-weight: 500;
+        font-size: 20px;
+
+        &:hover {
+            color: $brown;
+        }
+    }
+
+      .contact_us {
+          padding-top: 60px;
+          color: $brown;
+      }
+
+      .contact{
+          img{
+            margin-bottom: 20px;
+          }
+          span {
+              font-size: 22px;
+          }
+      }
+
+      .writeus{
+          h1{
+              float: right;
+          }
+          label{
+              font-size: 19px;
+              margin-bottom: 40px;
+          }
+
+          button {
+            background-color: $brown;
+            color: white;
+            border: none;
+            padding: 10px 40px 10px 40px;
+            float: right;
+        }
+
+          input[type="text"]{
+              width: 500px;
+             border: none; 
+             border-bottom: 2px solid $gray;
+             outline: none;
+          }
+
+          input[type="mail"]{
+            width: 500px;
+            border: none; 
+            border-bottom: 2px solid $gray;
+            outline: none;
+         }
+
+         input[type="location"]{
+            width: 500px;
+            border: none; 
+            border-bottom: 2px solid $gray;
+            outline: none;
+         }
+
+         input[type="number"]{
+            width: 500px;
+            border: none; 
+            border-bottom: 2px solid $gray;
+            outline: none;
+         }
+      }
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*  ================================== PODUCT SECTION ================================ */
+.product__topic {
+  padding-top: 100px;
+  padding-bottom: 100px;
+
+
+
+  a{
+      color: $brown;
+      text-decoration: none;
+
+      &:hover {
+          color: black;
+      }
+  }
+
+
+
+
+
+/* ============ flip ================ */
+.monthly__picks__box {
+    margin-top: 100px;
+}
+
+// .products__card{
+//     position: relative;
+//     margin-top: 100px;
+//     display: grid;
+//     grid-template-columns: 1fr 1fr 1fr;
+// }
+
+
+label {
+     margin-top: 15rem;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    display: block;
+    width: 300px;
+    height: 460px;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+
+.card {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-transition: all 600ms;
+    transition: all 600ms;
+    z-index: 20;
+
+    .front {
+        padding: 10px;
+    }
+
+    button{
+        background-color: $brown;
+        color: $white;
+        border: none;
+        padding: 10px 20px 10px 20px;
+    }
+    .more {
+        font-weight: bold;
+        color: $orange;
+    }
+
+    p{
+        font-weight: bold;
+    }
+}
+
+    .card div {
+        position: relative;
+        height: 100%;
+        width: 100%;
+        background: #FFF;
+        text-align: center;
+        // line-height: 20px;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        border-radius: 2px;
+    }
+
+    .card .back {
+       position: absolute;
+        background: $orange;
+        color: #FFF;
+        -webkit-transform: rotateX(180deg);
+        transform: rotateX(180deg);
+        text-align: left;
+        padding: 20px;
+    }
+
+label:hover .card {
+    // -webkit-transform: rotateX(20deg);
+    // transform: rotateX(20deg);
+    box-shadow: 0 20px 20px rgba(50,50,50,.2);
+}
+
+input {
+    display: none;
+}
+
+:checked + .card {
+    transform: rotateX(180deg);
+    -webkit-transform: rotateX(180deg);
+}
+
+label:hover :checked + .card {
+    // transform: rotateX(160deg);
+    // -webkit-transform: rotateX(160deg);
+    box-shadow: 0 20px 20px rgba(255,255,255,.2);
+}
+
+}
+
+
+@media (max-width: 560px) {
+    .product__topic .header h4{
+      font-size: 16px;
+      font-weight: bold;
+  }
+}
+
+
+
+
+/*  =======================================================================
+============================================ PAGE 3 HTML ========================================
+=======================
+============================================================ */
+
+
+ 
+
+.page3{
+    margin-top: 100px;
+    margin-bottom: 100px;
+
+    a{
+        text-decoration: none;
+        color: $black;
+        font-weight: 500;
+        font-size: 20px;
+
+        &:hover {
+            color: $brown;
+        }
+    }
+
+    .products {
+        margin-top: 20px;
+
+        .product__img {
+            height: 400px;
+            width: 430px;
+            padding: 10px;
+            border: 1px solid #e1e1e1;
+            transition: 0.3s;
+            cursor: pointer;
+
+            &:hover {
+                box-shadow: 3px 2px 10px 1px gray;
+            }
+        }
+    }
+
+    p{
+        @include para();
+    }
+
+    button {
+        margin-top: 10px;
+        padding:  15px;
+        border: none;
+        outline: none;
+    }
+}
+
+
+
+
+
+
+/*  =======================================================================
+============================================ PAGE 4 HTML ========================================
+=======================
+============================================================ */
+
+.page4 {
+      
+    .product__topic {
+        margin-bottom: 10px;
+    }
+   h2 {
+       color: $brown;
+   }
+
+   .instruction__box {
+       position: relative;
+
+       .box {
+           display: flex;
+           flex-direction: column;
+           justify-content: center;
+           height: 350px;
+           width: 270px;
+            box-shadow: 2px 3px 10px 3px gray;
+            margin: 30px auto;
+            padding: 10px;
+            border-radius: 10px;
+
+            .one, .two, .three, .four {
+                font-size: 3em;
+                font-weight: bold;
+                color: $brown;
+            }
+
+            p{
+                @include para();
+                line-height: 1;
+                text-align: center;
+                word-spacing: 2px;
+            }
+       }
+   }
+
+   .customer__review {
+       margin-top: 50px;
+
+       p{
+           font-size: 50px;
+           color: $brown;
+
+           a{
+               
+           }
+       }
+   }
+
+}
+
+@media (max-width: 1186px) {
+    .instruction__box .box {
+        height: 350px;
+        width: 180px;
+    }
+    .instruction__box h2 {
+        text-align: center;
+    }
+}
+
+
+
+
+
+
+
+
+/*  =======================================================================
+============================================ PAGE 5 HTML ========================================
+=======================
+============================================================ */
+
+.page5{
+    margin-top: 100px;
+    
+    p{
+        @include para();
+    }
+
+    .header {
+        a{
+            color: $brown;
+            font-size: 22px;
+            text-decoration: none;
+        }
+    }
+
+    .content {
+        margin-top: 50px;
+    }
+
+    ul li{
+        color: $brown;
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    .box {
+        box-shadow: 2px 3px 10px 3px gray;
+        padding: 20px;
+
+        span {
+            font-weight: bold;
+            font-size: 21px;
+        }
+    }
+
+}
+
+
+
+/*  =======================================================================
+============================================ PAGE 6 HTML ========================================
+=======================
+============================================================ */
+
+.page6{
+    margin-top: 100px;
+    a {
+        color: $brown;
+        text-decoration: none;
+        &:hover {
+            color: black;
+        }
+    }
+    .teabags{
+        color: $brown;
+    }
+    .content {
+        margin-top: 50px;
+    }
+.box {
+    height: 210px;
+    width: 260px;
+    box-shadow: 2px 3px 10px 3px gray;
+    margin: 10px auto;
+    text-align: center;
+    cursor: pointer;
+}
+
+p{
+    @include para();
+    font-size: 16px;
+}
+
+}
+
+
+
+
+/*  =======================================================================
+============================================ PAGE 7 HTML ========================================
+=======================
+============================================================ */
+
+.page7{
+    margin-top: 100px;
+
+    a{
+        color: $brown;
+        text-decoration: none;
+        &:hover {
+            color: black;
+        }
+    }
+    p{
+        @include para();
+        font-size: 16px;
+    }
+    .content {
+        margin-top: 50px;
+    }
+    .box {
+        height: 150px;
+        width: 160px;
+        box-shadow: 2px 3px 10px 3px gray;
+        margin: 10px auto;
+        text-align: center;
+        cursor: pointer;
+    }
+    .box2{
+        box-shadow: 2px 3px 10px 3px gray;
+        padding: 20px;
+
+        h2 {
+            color: $brown;  
+        }
+
+        ul li {
+            color: $brown;
+            font-weight: 500;
+        }
+    }
+}
