@@ -7,6 +7,27 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func ShowThree(c *gin.Context) {
+	c.HTML(200, "3.html", gin.H{
+		"title": "Gin is cool",
+	})
+
+}
+
+func ShowFour(c *gin.Context) {
+	c.HTML(200, "4.html", gin.H{
+		"title": "Gin is cool",
+	})
+
+}
+
+func ShowFive(c *gin.Context) {
+	c.HTML(200, "5.html", gin.H{
+		"title": "Gin is cool",
+	})
+
+}
+
 // AddProduct ... adds new product in the db
 func (server *Server) AddProduct(c *gin.Context) {
 	product := models.Product{}

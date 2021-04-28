@@ -1,24 +1,156 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ .title }}</title>
-    <link rel="stylesheet" href="/css/style.css">
-</head>
-<body>
-    <header>
-        <ul>
-            <li>Teas</li>
-            <li>Gifts</li>
-            <li class="logo"></li>
-            <li>About</li>
-            <li>Contact</li>
-        </ul>
-    </header>
-    <nav></nav>
-    <section>
-        
-    </section>
-</body>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css" integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous">
+
+    <!-- LINK CSS FILE -->
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+
+    <!-- GOOGLE FONT LINK -->
+    <link rel="stylesheet" href="img/Nexa Bold.otf">
+    <link rel="stylesheet" href="img/Nexa Light.otf">
+
+
+    <!-- LINK BOOTSTRAP FILE -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+
+    <!-- FNT-AWESOME -->
+    <script src="https://kit.fontawesome.com/1b4d515a4c.js" crossorigin="anonymous"></script>
+
+    <title>About | </title>
+  </head>
+  <body>
+    
+ <!-- NAVIGATION BAR -->
+ <div class="top__bar">
+    <div class="top__contact">
+     <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+    <div class="top__phone">
+     <i class="fa fa-phone phone" aria-hidden="true"> &nbsp;&nbsp;&nbsp;</i>+91 1234567890
+    </div>
+    </div>
+    <div class="top__paragraph">
+     <p> We have resumed shipping pan India. Delivery may take 5-7 working days.
+     </p>
+    </div>
+
+    <div class="top__logo">
+     <a href="#"><i class="fa fa-user top__user" aria-hidden="true" title="Login"></i></a>&nbsp;&nbsp;&nbsp;
+     <a href="#"> <i class="fas fa-shopping-bag top__addtocart"></i></a>
+    </div>
+  </div>
+  
+  <div class="navigation__bar">
+     <div class="left__nav">
+       <a href="#teas">TEAS</a>
+       <a href="#gifts">GIFTS</a>
+     </div>
+
+     <div class="nav__center">
+       <a href="index.html"><img src="img/TESORE TEA LOGO PNG.png" height="130px" width="130px"></a>
+     </div>
+
+     <div class="right__nav">
+       <a href="about.html">ABOUT</a>
+       <a href="contact.html">CONTACT</a>
+     </div>
+   </div>
+
+
+   <!-- MOBILE NAV -->
+   <div class="mobile__nav">
+     <div id="myNav" class="overlay">
+       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+       <div class="overlay-content">
+         <div class="contact"><h5>CONTACT</h5></div><br/>
+         <a href="#">TEAS</a><hr/>
+         <a href="#">GIFTS</a><hr/>
+         <a href="#">ABOUT</a><hr/>
+         <a href="#">CONTACT</a><br/>
+         <div class="account"><h5>ACCOUNT</h5></div>
+           <a href="#">LOG IN</a><hr/>
+           <a href="#">SIGN UP</a><hr/>
+         
+       </div>
+     </div>
+   </div>
+   <!-- END OF THE MOBILE NAV -->
+   
+
+
+
+
+
+
+
+
+
+   <!-- ============================ ABOUT SECTION ============================ -->
+    <div class="about__section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="link">
+                        <a href="index.html">Home</a>&nbsp; >  &nbsp;<a href="#">About</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container about__us">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>About us</h1><br/>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui, nulla
+                         nisi corrupti inventore cum dicta ea neque accusamus facere repellat sapiente vitae corporis
+                          odit quod! Nostrum doloremque temporibus aut harum possimus 
+                        mollitia facilis odio aliquam expedita fuga autem ab tempore ullam quod, cumque in quae porro
+                         totam sunt beatae molestias!</p>
+               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus reiciendis esse fugiat odit 
+                   laborum. Minus similique officia facere ea sapiente accusantium, 
+                   accusamus architecto perspiciatis nisi eos laudantium quis beatae vero!</p>
+                   <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui, nulla
+                    nisi corrupti inventore cum dicta ea neque accusamus facere repellat sapiente vitae corporis
+                     odit quod! Nostrum doloremque temporibus aut harum possimus 
+                   mollitia facilis odio aliquam expedita fuga autem ab tempore ullam quod, cumque in quae porro
+                    totam sunt beatae molestias!</p>
+           
+
+                    </div>
+
+                    <div class="col-md-12 source">
+                        <center>
+                            <h1>Available on</h1><br/><br/>
+                            <a href="#"><img src="img/amazon.jpg" height="70px"></a>
+                            <a href="#"><img src="img/insta.jpg" height="70px"></a>
+                           <a href="#"> <img src="img/swiggy.png" height="90px"></a>
+                        </center>
+                    </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+    <!-- Optional JavaScript; choose one of the two! -->
+     <script src="js/script.js">  </script>
+
+    <!-- Option 1: Bootstrap Bundle with Popper.js -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js" integrity="sha384-BOsAfwzjNJHrJ8cZidOg56tcQWfp6y72vEJ8xQ9w6Quywb24iOsW913URv1IS4GD" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper.js and Bootstrap JS
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.min.js" integrity="sha384-5h4UG+6GOuV9qXh6HqOLwZMY4mnLPraeTrjT5v07o347pj6IkfuoASuGBhfDsp3d" crossorigin="anonymous"></script>
+    -->
+  </body>
 </html>
