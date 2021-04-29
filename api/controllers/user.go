@@ -14,7 +14,8 @@ func (server *Server) Register(c *gin.Context) {
 	user := models.User{}
 	var err error
 
-	if err := c.ShouldBindJSON(&user); err != nil {
+	fmt.Println(c)
+	if err := c.ShouldBind(&user); err != nil {
 		c.JSON(500, gin.H{"error": err})
 		fmt.Println(user)
 		return
@@ -42,7 +43,7 @@ func (server *Server) Register(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{"message": "success"})
+	c.Redirect(301, "/users/login")
 }
 
 // Login is the handler for the login route
@@ -50,7 +51,7 @@ func (server *Server) Login(c *gin.Context) {
 	user := models.User{}
 	var err error
 
-	if err := c.ShouldBindJSON(&user); err != nil {
+	if err := c.ShouldBind(&user); err != nil {
 		c.JSON(500, gin.H{"error": err})
 		fmt.Println(err)
 		return
@@ -119,7 +120,7 @@ func (server *Server) UpdateUser(c *gin.Context) {
 
 	user := models.User{}
 
-	if err := c.ShouldBindJSON(&user); err != nil {
+	if err := c.ShouldBind(&user); err != nil {
 		c.JSON(500, gin.H{"error": err})
 		return
 	}
@@ -157,6 +158,4 @@ func (server *Server) DeleteUser(c *gin.Context) {
 	}
 
 	c.JSON(200, gin.H{"message": "success"})
-	return
-
 }

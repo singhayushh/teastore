@@ -14,21 +14,21 @@ func Ping(c *gin.Context) {
 // RenderHome renders the home page for a get request on "/" route
 func RenderHome(c *gin.Context) {
 	c.HTML(200, "index.html", gin.H{
-		"title": "Gin is cool",
+		"title": "Home | TEASTORE",
 	})
 
 }
 
 func RenderAbout(c *gin.Context) {
 	c.HTML(200, "about.html", gin.H{
-		"title": "Gin is cool",
+		"title": "About | TEASTORE",
 	})
 
 }
 
 func RenderContact(c *gin.Context) {
 	c.HTML(200, "contact.html", gin.H{
-		"title": "Gin is cool",
+		"title": "Contact | TEASTORE",
 	})
 
 }
