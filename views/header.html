@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css"
+        integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous">
+
+    <!-- LINK CSS FILE -->
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+    <!-- GOOGLE FONT LINK -->
+    <link rel="stylesheet" href="/img/Nexa Bold.otf">
+    <link rel="stylesheet" href="/img/Nexa Light.otf">
+
+
+    <!-- LINK BOOTSTRAP FILE -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- FNT-AWESOME -->
+    <script src="https://kit.fontawesome.com/1b4d515a4c.js" crossorigin="anonymous"></script>
+
+    <title> {{ .title }} </title>
+</head>
+
+<body>
+
+
+    <!-- NAVIGATION BAR -->
+    <div class="top__bar">
+        <div class="top__contact">
+            <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+            <div class="top__phone">
+                <i class="fa fa-phone phone" aria-hidden="true"> &nbsp;&nbsp;&nbsp;</i>+91 1234567890
+            </div>
+        </div>
+        <div class="top__paragraph">
+            <p> We have resumed shipping pan India. Delivery may take 5-7 working days.
+            </p>
+        </div>
+
+        <div class="top__logo">
+            <a href="/login"><i class="fa fa-user top__user" aria-hidden="true" title="Login"></i></a>&nbsp;&nbsp;&nbsp;
+            <a href="/view-cart"> <i class="fas fa-shopping-bag top__addtocart"></i></a>
+        </div>
+    </div>
+
+    <div class="navigation__bar">
+        <div class="left__nav">
+            <a href="#teas">TEAS</a>
+            <a href="#gifts">GIFTS</a>
+        </div>
+
+        <div class="nav__center">
+            <a href="/"><img src="/img/TESORE TEA LOGO PNG.png" height="130px" width="130px"></a>
+        </div>
+
+        <div class="right__nav">
+            <a href="/about">ABOUT</a>
+            <a href="/contact">CONTACT</a>
+        </div>
+    </div>
+
+
+    <!-- MOBILE NAV -->
+    <div class="mobile__nav">
+        <div id="myNav" class="overlay">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <div class="overlay-content">
+                <div class="contact">
+                    <h5>CONTACT</h5>
+                </div><br />
+                <a href="#">TEAS</a>
+                <hr />
+                <a href="#">GIFTS</a>
+                <hr />
+                <a href="#">ABOUT</a>
+                <hr />
+                <a href="#">CONTACT</a><br />
+                <div class="account">
+                    <h5>ACCOUNT</h5>
+                </div>
+                <a href="#">LOG IN</a>
+                <hr />
+                <a href="#">SIGN UP</a>
+                <hr />
+
+            </div>
+        </div>
+    </div>
+    <!-- END OF THE MOBILE NAV -->

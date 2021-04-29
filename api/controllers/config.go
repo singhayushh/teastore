@@ -50,6 +50,8 @@ func (server *Server) InitServer(Port string) {
 	// Load HTML and Static files
 	server.Router.LoadHTMLGlob("views/*.html")
 	server.Router.Static("/css", "views/css")
+	server.Router.Static("/js", "views/js")
+	server.Router.Static("/img", "views/img")
 
 	// Running the server
 	fmt.Println("Listening to port", Port)

@@ -19,6 +19,20 @@ func RenderHome(c *gin.Context) {
 
 }
 
+func RenderAbout(c *gin.Context) {
+	c.HTML(200, "about.html", gin.H{
+		"title": "Gin is cool",
+	})
+
+}
+
+func RenderContact(c *gin.Context) {
+	c.HTML(200, "contact.html", gin.H{
+		"title": "Gin is cool",
+	})
+
+}
+
 // RenderRegister ...
 func RenderRegister(c *gin.Context) {
 	c.HTML(200, "register.html", gin.H{

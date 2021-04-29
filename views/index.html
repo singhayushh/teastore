@@ -1,25 +1,181 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ .title }}</title>
-    <link rel="stylesheet" href="/css/style.css">
-</head>
-<body>
-    <header>
-        <ul>
-            <li>Teas</li>
-            <li>Gifts</li>
-            <li class="logo"></li>
-            <li>About</li>
-            <li>Contact</li>
-        </ul>
-    </header>
-    <div class="header-overlay"></div>
-    <nav></nav>
-    <section>
-        {{ .user }}
-    </section>
-</body>
-</html>
+{{ template "header.html" .}}
+
+<!-- =============================== Hero header ==================== -->
+<div class="hero__header">
+  <h2 class="hero__text">Begin your day with the finest.</h2>
+</div>
+
+
+
+
+<!-- =============================== Hero header ==================== -->
+
+
+<center>
+  <div class="count__section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 col-sm-12 count">
+          <h2>12 Tons</h2>
+          <p>of tea sold</p>
+        </div>
+        <div class="col-md-4 col-sm-12 count">
+          <h2>6 Million</h2>
+          <p>cups served</p>
+        </div>
+        <div class="col-md-4 col-sm-12 count">
+          <h2>60,000</h2>
+          <p>happy customers</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</center>
+
+
+
+<!-- ============================= PRODUCTS SECTION ===============================-->
+<div class="product__topic">
+  <div class="header">
+    <center>
+      <h4><a href="#">Monthly Picks</a> &nbsp; . <a href="#">Featured Products</a> &nbsp; . <a href="#">Best Sellers</a>
+      </h4>
+    </center>
+  </div>
+
+  <div class="monthly__picks__box">
+
+
+    <!-- <label>
+      <input type="checkbox"/>
+      <div class="card">
+          <div class="front">Front</div>
+          <div class="back">Back</div>
+      </div>
+  </label> -->
+
+
+    <!-- <label>
+    <input type="checkbox"/>
+    <div class="card">
+        <div class="front">
+          <img src="/img/cutting pack.png" height="200px"><br/><br/>
+          <h2>Tea Variety 1</h2><br/>
+          <p>RS: 900</p>
+          <a href="#"><button>ADD TO CARD</button></a><br/><br/>
+          <p class="more">more</p>
+        </div>
+
+        <div class="back">
+          <a href="#"> <button>ADD TO CARD</button>
+        </div>
+    </div>
+</label> -->
+
+
+
+
+    <div class="products__card">
+
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4 col-md-12 col-sm-12">
+
+            <div class="box">
+              <label>
+                <input type="checkbox" />
+                <div class="card">
+                  <div class="front">
+                    <img src="/img/cutting pack.png" height="200px"><br /><br />
+                    <h2>Tea Variety 1</h2><br />
+                    <p>RS: 900</p>
+                    <a href="#"><button>ADD TO CARD</button></a><br /><br />
+                    <p class="more">more</p>
+                  </div>
+
+                  <div class="back">
+                    <h4>Ingredients 1:</h3>
+                      <h5>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Amet, nesciunt?</h5>
+                      <h5>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, itaque!</h5>
+                      <br />
+                      <a href="#"><button>ADD TO CARD</button></a><br /><br />
+                  </div>
+                </div>
+              </label>
+            </div>
+
+
+          </div>
+
+          <div class="col-lg-4 col-md-12 col-sm-12">
+
+            <div class="box">
+              <label>
+                <input type="checkbox" />
+                <div class="card">
+                  <div class="front">
+                    <img src="/img/cutting pack.png" height="200px"><br /><br />
+                    <h2>Tea Variety 2</h2><br />
+                    <p>RS: 900</p>
+                    <a href="#"><button>ADD TO CARD</button></a><br /><br />
+                    <p class="more">more</p>
+                  </div>
+
+                  <div class="back">
+                    <h4>Ingredients 2:</h3>
+                      <h5>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Amet, nesciunt?</h5>
+                      <h5>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, itaque!</h5>
+                      <br />
+                      <a href="#"><button>ADD TO CARD</button></a><br /><br />
+                  </div>
+                </div>
+              </label>
+            </div>
+
+
+          </div>
+
+          <div class="col-lg-4 col-md-12 col-sm-12">
+
+            <div class="box">
+              <label>
+                <input type="checkbox" />
+                <div class="card">
+                  <div class="front">
+                    <img src="/img/cutting pack.png" height="200px"><br /><br />
+                    <h2>Tea Variety 3</h2><br />
+                    <p>RS: 900</p>
+                    <a href="#"><button>ADD TO CARD</button></a><br /><br />
+                    <p class="more">more</p>
+                  </div>
+
+                  <div class="back">
+                    <h4>Ingredients 3:</h3>
+                      <h5>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Amet, nesciunt?</h5>
+                      <h5>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, itaque!</h5>
+                      <br />
+                      <a href="#"><button>ADD TO CARD</button></a><br /><br />
+                  </div>
+                </div>
+              </label>
+            </div>
+
+
+          </div>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div><!-- End of the monthly picks box-->
+
+</div>
+
+{{ template "footer.html" .}}

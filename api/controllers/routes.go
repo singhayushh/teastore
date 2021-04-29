@@ -5,6 +5,8 @@ import "teastore/api/middlewares"
 func (server *Server) initRoutes() {
 	server.Router.GET("/ping", Ping)
 	server.Router.GET("/", RenderHome)
+	server.Router.GET("/about", RenderAbout)
+	server.Router.GET("/contact", RenderContact)
 
 	userRoute := server.Router.Group("/users")
 	{
@@ -19,7 +21,7 @@ func (server *Server) initRoutes() {
 
 	productRoute := server.Router.Group("/products")
 	{
-		productRoute.GET("/view/:path", server.ShowProduct)
+		productRoute.GET("/view/product/:path", server.ShowProduct)
 		productRoute.POST("/add", middlewares.AuthenticationMiddleware("admin"), server.AddProduct)
 		productRoute.POST("/edit", middlewares.AuthenticationMiddleware("admin"), server.UpdateProduct)
 		productRoute.POST("/delete", middlewares.AuthenticationMiddleware("admin"), server.DeleteProduct)

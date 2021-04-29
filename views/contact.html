@@ -1,0 +1,42 @@
+{{ template "header.html" .}}
+
+<!-- ============================ CONTACT SECTION ============================ -->
+<div class="contact__section">
+
+    <div class="container">
+        <div class="contact__text">
+            <a href="/">Home</a>&nbsp; > &nbsp;<a href="#">Contact us</a>
+        </div>
+    </div>
+
+    <div class="container contact_us">
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+                <div class="contact">
+                    <h1>Contact</h1><br /><br />
+                    <br />
+                    <img src="/img/location.svg" height="50px">&nbsp;&nbsp;&nbsp;&nbsp;<span>Adress</span><br /><br />
+                    <img src="/img/email.svg" height="50px">&nbsp;&nbsp;&nbsp;&nbsp; <span>Email</span><br /><br />
+                    <img src="/img/phone.svg" height="50px">&nbsp;&nbsp;&nbsp;&nbsp; <span>Phone</span><br /><br />
+                    <img src="/img/insta.jpg" height="50px">&nbsp;&nbsp;&nbsp;&nbsp; <span>Insta ID</span>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12 writeus">
+                <h1>Write us</h1><br /><br /><br /><br /><br />
+                <form>
+                    <label for="name">Name &nbsp;&nbsp;<input type="text"> </label><br />
+                    <label for="email">Email &nbsp;&nbsp;<input type="mail"> </label><br />
+                    <label for="phone">Phone no. &nbsp;&nbsp;<input type="number"> </label><br />
+                    <label for="location"> Location &nbsp;&nbsp;<input type="location"> </label><br />
+                    <label for="message">Message &nbsp;&nbsp;<input type="text"> </label><br />
+                    <br />
+
+                    <a href="#"> <button>SEND</button></a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{ template "footer.html" .}}
