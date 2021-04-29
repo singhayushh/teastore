@@ -7,27 +7,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func ShowThree(c *gin.Context) {
-	c.HTML(200, "3.html", gin.H{
-		"title": "Gin is cool",
-	})
-
-}
-
-func ShowFour(c *gin.Context) {
-	c.HTML(200, "4.html", gin.H{
-		"title": "Gin is cool",
-	})
-
-}
-
-func ShowFive(c *gin.Context) {
-	c.HTML(200, "5.html", gin.H{
-		"title": "Gin is cool",
-	})
-
-}
-
 // AddProduct ... adds new product in the db
 func (server *Server) AddProduct(c *gin.Context) {
 	product := models.Product{}
@@ -59,13 +38,17 @@ func (server *Server) AddProduct(c *gin.Context) {
 // ShowProduct fetches data of the product by id
 func (server *Server) ShowProduct(c *gin.Context) {
 	path := c.Param("path")
-	product := models.Product{}
-	fetchedProduct, err := product.FetchByID(server.DB, path)
-	if err != nil {
-		c.JSON(500, gin.H{"error": err})
-		return
-	}
-	c.JSON(200, gin.H{"product": fetchedProduct})
+	product := fmt.Sprint("tea-", path, ".html")
+	// product := models.Product{}
+	// fetchedProduct, err := product.FetchByID(server.DB, path)
+	// if err != nil {
+	// 	c.JSON(500, gin.H{"error": err})
+	// 	return
+	// }
+	// c.JSON(200, gin.H{"product": fetchedProduct})
+	c.HTML(200, product, gin.H{
+		"title": "Gin is cool",
+	})
 }
 
 // UpdateProduct updates the detials of the product

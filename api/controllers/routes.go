@@ -21,9 +21,6 @@ func (server *Server) initRoutes() {
 
 	productRoute := server.Router.Group("/products")
 	{
-		productRoute.GET("/view/5", ShowFive)
-		productRoute.GET("/view/4", ShowFour)
-		productRoute.GET("/view/3", ShowThree)
 		productRoute.GET("/view/product/:path", server.ShowProduct)
 		productRoute.POST("/add", middlewares.AuthenticationMiddleware("admin"), server.AddProduct)
 		productRoute.POST("/edit", middlewares.AuthenticationMiddleware("admin"), server.UpdateProduct)
