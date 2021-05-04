@@ -7,6 +7,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// ShowAllProducts ...
+func (server *Server) ShowAllBlogs(c *gin.Context) {
+	c.HTML(200, "blog-home.html", gin.H{
+		"title": "Products | TEASTORE",
+	})
+}
+
 // CreateBlog ... adds new blog in the db
 func (server *Server) CreateBlog(c *gin.Context) {
 	blog := models.Blog{}
@@ -35,8 +42,8 @@ func (server *Server) CreateBlog(c *gin.Context) {
 	c.JSON(200, gin.H{"message": "success"})
 }
 
-// ReadBlog fetches data of the blog by id
-func (server *Server) ReadBlog(c *gin.Context) {
+// ShowBlog fetches data of the blog by id
+func (server *Server) ShowBlog(c *gin.Context) {
 	path := c.Param("path")
 	blog := models.Blog{}
 	fetchedBlog, err := blog.FetchByID(server.DB, path)
@@ -66,7 +73,6 @@ func (server *Server) UpdateBlog(c *gin.Context) {
 
 	c.JSON(200, gin.H{"updated": blog})
 	return
-
 }
 
 // DeleteBlog removes the requested blog

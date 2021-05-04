@@ -32,17 +32,3 @@ func RenderContact(c *gin.Context) {
 	})
 
 }
-
-// RenderRegister ...
-func RenderRegister(c *gin.Context) {
-	c.HTML(200, "register.html", gin.H{
-		"title": "Tea Store | Register",
-	})
-}
-
-// RenderLogin ...
-func RenderLogin(c *gin.Context) {
-	c.HTML(200, "login.html", gin.H{
-		"title": "Tea Store | Login",
-	})
-}

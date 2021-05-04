@@ -11,15 +11,17 @@
 
     <div class="container contact_us">
         <div class="row">
-            <div class="col-md-6 col-sm-12 writeus">
-                <h1>Login</h1><br /><br /><br /><br /><br />
+            <div class="col-md-6 col-sm-12 writeus login">
+                <h1>Login</h1><br /><br /><br />
                 <form method="POST" action="/users/login">
-                    <label for="email">Email &nbsp;&nbsp;<input type="email" name="email"> </label><br />
+                    <label for="email">Email &nbsp;&nbsp;<input type="mail" name="email"> </label><br />
                     <label for="password">Password &nbsp;&nbsp;<input type="text" name="password"> </label><br />
                     <br />
 
                     <a href="#"> <button>Sign In</button></a>
                 </form>
+                <br /><br /><br />
+                <p class="ref">Don't have an account? <a href="/users/register">Create one here.</a></p>
             </div>
         </div>
     </div>

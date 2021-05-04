@@ -22,6 +22,11 @@ body {
   overflow-x: hidden;
 }
 
+a, a:hover, a:active, a:visited {
+  color: inherit;
+  font-size: inherit;
+}
+
 /*  COUNT SECTION*/
 .count__section {
   margin-top: 100px;
@@ -106,6 +111,24 @@ body {
 
 .contact__section .writeus h1 {
   float: right;
+}
+
+.login {
+  margin: auto;
+}
+
+.login h1 {
+  float: none !important;
+  text-align: center;
+}
+
+.ref {
+  color: #000;
+}
+
+.ref a {
+  color: #663333;
+  font-size: inherit;
 }
 
 .contact__section .writeus label {
@@ -551,9 +574,12 @@ body {
 
 .top__bar .phone {
   position: relative;
-  padding-top: 10px;
-  -webkit-transform: rotate(100deg);
-          transform: rotate(100deg);
+  -webkit-transform: rotate(-270deg);
+          transform: rotate(-270deg);
+          transform: rotate(-270deg);
+  vertical-align: middle;
+  display: inline-grid;
+  margin-right: 15px;
 }
 
 .top__bar .top__user {
