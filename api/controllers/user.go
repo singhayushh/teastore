@@ -9,6 +9,20 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// RenderRegister ...
+func RenderRegister(c *gin.Context) {
+	c.HTML(200, "register.html", gin.H{
+		"title": "Tea Store | Register",
+	})
+}
+
+// RenderLogin ...
+func RenderLogin(c *gin.Context) {
+	c.HTML(200, "login.html", gin.H{
+		"title": "Tea Store | Login",
+	})
+}
+
 // Register is the handler for the register route
 func (server *Server) Register(c *gin.Context) {
 	user := models.User{}

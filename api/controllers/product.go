@@ -7,6 +7,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// ShowAllProducts ...
+func (server *Server) ShowAllProducts(c *gin.Context) {
+	c.HTML(200, "product-home.html", gin.H{
+		"title": "Products | TEASTORE",
+	})
+
+}
+
 // AddProduct ... adds new product in the db
 func (server *Server) AddProduct(c *gin.Context) {
 	product := models.Product{}
@@ -38,7 +46,7 @@ func (server *Server) AddProduct(c *gin.Context) {
 // ShowProduct fetches data of the product by id
 func (server *Server) ShowProduct(c *gin.Context) {
 	path := c.Param("path")
-	product := fmt.Sprint("tea-", path, ".html")
+	fmt.Println(path)
 	// product := models.Product{}
 	// fetchedProduct, err := product.FetchByID(server.DB, path)
 	// if err != nil {
@@ -46,8 +54,8 @@ func (server *Server) ShowProduct(c *gin.Context) {
 	// 	return
 	// }
 	// c.JSON(200, gin.H{"product": fetchedProduct})
-	c.HTML(200, product, gin.H{
-		"title": "Gin is cool",
+	c.HTML(200, "product-sample.html", gin.H{
+		"title": "View Product",
 	})
 }
 

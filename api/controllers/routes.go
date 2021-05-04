@@ -21,7 +21,8 @@ func (server *Server) initRoutes() {
 
 	productRoute := server.Router.Group("/products")
 	{
-		productRoute.GET("/view/product/:path", server.ShowProduct)
+		productRoute.GET("/", server.ShowAllProducts)
+		productRoute.GET("/view/:path", server.ShowProduct)
 		productRoute.POST("/add", middlewares.AuthenticationMiddleware("admin"), server.AddProduct)
 		productRoute.POST("/edit", middlewares.AuthenticationMiddleware("admin"), server.UpdateProduct)
 		productRoute.POST("/delete", middlewares.AuthenticationMiddleware("admin"), server.DeleteProduct)
@@ -29,7 +30,8 @@ func (server *Server) initRoutes() {
 
 	blogRoute := server.Router.Group("/blogs")
 	{
-		blogRoute.GET("/view/:path", server.ReadBlog)
+		blogRoute.GET("/", server.ShowAllBlogs)
+		blogRoute.GET("/view/:path", server.ShowBlog)
 		blogRoute.POST("/create", middlewares.AuthenticationMiddleware("admin"), server.CreateBlog)
 		blogRoute.POST("/edit", middlewares.AuthenticationMiddleware("admin"), server.UpdateBlog)
 		blogRoute.POST("/delete", middlewares.AuthenticationMiddleware("admin"), server.DeleteBlog)
