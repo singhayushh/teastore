@@ -1,0 +1,30 @@
+{{ template "header.html" . }}
+
+<!-- ============================ REGISTER SECTION ============================ -->
+<div class="contact__section">
+
+    <div class="container">
+        <div class="contact__text">
+            <a href="/">User</a>&nbsp; > &nbsp;<a href="#">Login</a>
+        </div>
+    </div>
+
+    <div class="container contact_us">
+        <div class="row">
+            <div class="col-md-6 col-sm-12 writeus login">
+                <h1>Login</h1><br /><br /><br />
+                <form method="POST" action="/users/login">
+                    <label for="email">Email &nbsp;&nbsp;<input type="mail" name="email"> </label><br />
+                    <label for="password">Password &nbsp;&nbsp;<input type="text" name="password"> </label><br />
+                    <br />
+
+                    <a href="#"> <button>Sign In</button></a>
+                </form>
+                <br /><br /><br />
+                <p class="ref">Don't have an account? <a href="/users/register">Create one here.</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{ template "footer.html" . }}

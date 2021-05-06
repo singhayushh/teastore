@@ -7,12 +7,27 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// RenderAllBlogs ...
+func (server *Server) RenderAllBlogs(c *gin.Context) {
+	blog := models.Blog{}
+	blogs, err := blog.FetchAll(server.DB)
+	if err != nil {
+		c.JSON(500, gin.H{"error": err})
+		return
+	}
+
+	c.HTML(200, "listBlog.html", gin.H{
+		"title": "Blogs | TEASTORE",
+		"blogs": blogs,
+	})
+}
+
 // CreateBlog ... adds new blog in the db
 func (server *Server) CreateBlog(c *gin.Context) {
 	blog := models.Blog{}
 	var err error
 
-	if err := c.ShouldBindJSON(&blog); err != nil {
+	if err := c.ShouldBind(&blog); err != nil {
 		c.JSON(500, gin.H{"error": err})
 		return
 	}
@@ -35,23 +50,41 @@ func (server *Server) CreateBlog(c *gin.Context) {
 	c.JSON(200, gin.H{"message": "success"})
 }
 
-// ReadBlog fetches data of the blog by id
-func (server *Server) ReadBlog(c *gin.Context) {
-	path := c.Param("path")
+// RenderBlog fetches data of the blog by id
+func (server *Server) RenderBlog(c *gin.Context) {
+	id := c.Param("id")
 	blog := models.Blog{}
-	fetchedBlog, err := blog.FetchByID(server.DB, path)
+	fetchedBlog, err := blog.FetchByID(server.DB, id)
 	if err != nil {
 		c.JSON(500, gin.H{"error": err})
 		return
 	}
-	c.JSON(200, gin.H{"blog": fetchedBlog})
+	c.HTML(200, "viewBlog.html", gin.H{
+		"title": "Blog | TEASTORE",
+		"blogs": fetchedBlog,
+	})
 }
 
-// UpdateBlog updates the detials of the blog
-func (server *Server) UpdateBlog(c *gin.Context) {
+// RenderEditBlog fetches data of the blog by id (path)
+func (server *Server) RenderEditBlog(c *gin.Context) {
+	id := c.Param("id")
+	blog := models.Blog{}
+	fetchedBlog, err := blog.FetchByID(server.DB, id)
+	if err != nil {
+		c.JSON(500, gin.H{"error": err})
+		return
+	}
+	c.HTML(200, "editBlog.html", gin.H{
+		"title": "Edit blog | Teastore",
+		"blog":  fetchedBlog,
+	})
+}
+
+// UpdateBlogByID updates the detials of the blog
+func (server *Server) UpdateBlogByID(c *gin.Context) {
 	blog := models.Blog{}
 
-	if err := c.ShouldBindJSON(&blog); err != nil {
+	if err := c.ShouldBind(&blog); err != nil {
 		c.JSON(500, gin.H{"error": err})
 		return
 	}
@@ -65,15 +98,13 @@ func (server *Server) UpdateBlog(c *gin.Context) {
 	}
 
 	c.JSON(200, gin.H{"updated": blog})
-	return
-
 }
 
-// DeleteBlog removes the requested blog
-func (server *Server) DeleteBlog(c *gin.Context) {
+// DeleteBlogByID removes the requested blog
+func (server *Server) DeleteBlogByID(c *gin.Context) {
 	blog := models.Blog{}
 
-	if err := c.ShouldBindJSON(&blog); err != nil {
+	if err := c.ShouldBind(&blog); err != nil {
 		c.JSON(500, gin.H{"error": err})
 		return
 	}
@@ -87,5 +118,4 @@ func (server *Server) DeleteBlog(c *gin.Context) {
 	}
 
 	c.JSON(200, gin.H{"updated": "success"})
-	return
 }

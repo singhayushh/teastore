@@ -43,24 +43,23 @@ func (product *Product) Validate(action string) error {
 		return err
 	}
 	if product.Name == "" {
-		return errors.New("Name is required")
+		return errors.New("name is required")
 	}
 	if product.Image == "" {
 		product.Image = "https://raw.githubusercontent.com/Simulacra-Technologies/teastore/master/templates/Image%20Not%20Available.png"
 	}
 	if product.Description == "" {
-		return errors.New("Description is required")
+		return errors.New("description is required")
 	}
 	if product.Price == "" {
-		return errors.New("Price is required")
+		return errors.New("price is required")
 	}
 	return nil
 }
 
 // Save the product in the db
 func (product *Product) Save(db *gorm.DB) (*Product, error) {
-	var err error
-	err = db.Debug().Create(&product).Error
+	err := db.Debug().Create(&product).Error
 	if err != nil {
 		return nil, err
 	}
@@ -69,9 +68,8 @@ func (product *Product) Save(db *gorm.DB) (*Product, error) {
 
 // FetchAll returns an array of Products
 func (product *Product) FetchAll(db *gorm.DB) (*[]Product, error) {
-	var err error
 	products := []Product{}
-	err = db.Debug().Model(&Product{}).Find(&products).Error
+	err := db.Debug().Model(&Product{}).Find(&products).Error
 	if err != nil {
 		return nil, err
 	}
@@ -80,8 +78,7 @@ func (product *Product) FetchAll(db *gorm.DB) (*[]Product, error) {
 
 // FetchByID needs the path to search for the corresponding product.
 func (product *Product) FetchByID(db *gorm.DB, path string) (*Product, error) {
-	var err error
-	err = db.Debug().Model(Product{}).Where("path = ?", path).Take(&product).Error
+	err := db.Debug().Model(Product{}).Where("path = ?", path).Take(&product).Error
 	if err != nil {
 		return nil, err
 	}
@@ -92,7 +89,7 @@ func (product *Product) FetchByID(db *gorm.DB, path string) (*Product, error) {
 }
 
 // Update currently allows changing the image, description, price, stock
-func (product *Product) Update(db *gorm.DB, path string) (*Product, error) {
+func (product *Product) Update(db *gorm.DB, id string) (*Product, error) {
 
 	err := product.Validate("update")
 	if err != nil {
@@ -100,9 +97,10 @@ func (product *Product) Update(db *gorm.DB, path string) (*Product, error) {
 	}
 
 	// Update the product
-	db = db.Debug().Model(&Product{}).Where("path = ?", path).Take(&Product{}).UpdateColumns(
+	db = db.Debug().Model(&Product{}).Where("id = ?", id).Take(&Product{}).UpdateColumns(
 		map[string]interface{}{
 			"name":        product.Name,
+			"path":        product.Path,
 			"image":       product.Image,
 			"description": product.Description,
 			"price":       product.Price,
@@ -115,7 +113,7 @@ func (product *Product) Update(db *gorm.DB, path string) (*Product, error) {
 	}
 
 	// Fetch the product
-	err = db.Debug().Model(&Product{}).Where("path = ?", path).Take(&product).Error
+	err = db.Debug().Model(&Product{}).Where("id = ?", id).Take(&product).Error
 	if err != nil {
 		return nil, err
 	}
@@ -123,9 +121,9 @@ func (product *Product) Update(db *gorm.DB, path string) (*Product, error) {
 }
 
 // Delete the product from the database
-func (product *Product) Delete(db *gorm.DB, path string) (int64, error) {
+func (product *Product) Delete(db *gorm.DB, id string) (int64, error) {
 
-	db = db.Debug().Model(&Product{}).Where("path = ?", path).Take(&Product{}).Delete(&Product{})
+	db = db.Debug().Model(&Product{}).Where("id = ?", id).Take(&Product{}).Delete(&Product{})
 
 	if db.Error != nil {
 		return 0, db.Error

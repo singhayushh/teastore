@@ -37,21 +37,20 @@ func (blog *Blog) Validate(action string) error {
 	blog.Cover = strings.TrimSpace(blog.Cover)
 	blog.Author = strings.TrimSpace(blog.Author)
 	if blog.Title == "" {
-		return errors.New("Title is required")
+		return errors.New("title is required")
 	}
 	if blog.Cover == "" {
 		blog.Cover = "https://raw.githubusercontent.com/Simulacra-Technologies/teastore/master/templates/Cover%20Not%20Available.png"
 	}
 	if blog.Author == "" {
-		return errors.New("Author is required")
+		return errors.New("author is required")
 	}
 	return nil
 }
 
 // Save the blog in the db
 func (blog *Blog) Save(db *gorm.DB) (*Blog, error) {
-	var err error
-	err = db.Debug().Create(&blog).Error
+	err := db.Debug().Create(&blog).Error
 	if err != nil {
 		return nil, err
 	}
@@ -60,9 +59,8 @@ func (blog *Blog) Save(db *gorm.DB) (*Blog, error) {
 
 // FetchAll returns an array of Blogs
 func (blog *Blog) FetchAll(db *gorm.DB) (*[]Blog, error) {
-	var err error
 	blogs := []Blog{}
-	err = db.Debug().Model(&Blog{}).Find(&blogs).Error
+	err := db.Debug().Model(&Blog{}).Find(&blogs).Error
 	if err != nil {
 		return nil, err
 	}
@@ -71,8 +69,7 @@ func (blog *Blog) FetchAll(db *gorm.DB) (*[]Blog, error) {
 
 // FetchByID needs the path to search for the corresponding blog.
 func (blog *Blog) FetchByID(db *gorm.DB, path string) (*Blog, error) {
-	var err error
-	err = db.Debug().Model(Blog{}).Where("path = ?", path).Take(&blog).Error
+	err := db.Debug().Model(Blog{}).Where("path = ?", path).Take(&blog).Error
 	if err != nil {
 		return nil, err
 	}
@@ -83,7 +80,7 @@ func (blog *Blog) FetchByID(db *gorm.DB, path string) (*Blog, error) {
 }
 
 // Update currently allows changing the cover, author, price, stock
-func (blog *Blog) Update(db *gorm.DB, path string) (*Blog, error) {
+func (blog *Blog) Update(db *gorm.DB, id string) (*Blog, error) {
 
 	err := blog.Validate("update")
 	if err != nil {
@@ -91,9 +88,10 @@ func (blog *Blog) Update(db *gorm.DB, path string) (*Blog, error) {
 	}
 
 	// Update the blog
-	db = db.Debug().Model(&Blog{}).Where("path = ?", path).Take(&Blog{}).UpdateColumns(
+	db = db.Debug().Model(&Blog{}).Where("id = ?", id).Take(&Blog{}).UpdateColumns(
 		map[string]interface{}{
 			"title":      blog.Title,
+			"path":       blog.Path,
 			"cover":      blog.Cover,
 			"author":     blog.Author,
 			"updated_at": time.Now(),
@@ -104,7 +102,7 @@ func (blog *Blog) Update(db *gorm.DB, path string) (*Blog, error) {
 	}
 
 	// Fetch the blog
-	err = db.Debug().Model(&Blog{}).Where("path = ?", path).Take(&blog).Error
+	err = db.Debug().Model(&Blog{}).Where("id = ?", id).Take(&blog).Error
 	if err != nil {
 		return nil, err
 	}
@@ -112,9 +110,9 @@ func (blog *Blog) Update(db *gorm.DB, path string) (*Blog, error) {
 }
 
 // Delete the blog from the database
-func (blog *Blog) Delete(db *gorm.DB, path string) (int64, error) {
+func (blog *Blog) Delete(db *gorm.DB, id string) (int64, error) {
 
-	db = db.Debug().Model(&Blog{}).Where("path = ?", path).Take(&Blog{}).Delete(&Blog{})
+	db = db.Debug().Model(&Blog{}).Where("id = ?", id).Take(&Blog{}).Delete(&Blog{})
 
 	if db.Error != nil {
 		return 0, db.Error

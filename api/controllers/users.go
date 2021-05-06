@@ -9,12 +9,27 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Register is the handler for the register route
+// RenderRegister ...
+func RenderRegister(c *gin.Context) {
+	c.HTML(200, "register.html", gin.H{
+		"title": "Sign In | Teastore",
+	})
+}
+
+// RenderLogin ...
+func RenderLogin(c *gin.Context) {
+	c.HTML(200, "login.html", gin.H{
+		"title": "Sign Up | Teastore",
+	})
+}
+
+// Register ... handler for POST /user/register
 func (server *Server) Register(c *gin.Context) {
 	user := models.User{}
 	var err error
 
-	if err := c.ShouldBindJSON(&user); err != nil {
+	fmt.Println(c)
+	if err := c.ShouldBind(&user); err != nil {
 		c.JSON(500, gin.H{"error": err})
 		fmt.Println(user)
 		return
@@ -42,15 +57,15 @@ func (server *Server) Register(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{"message": "success"})
+	c.Redirect(301, "/users/login")
 }
 
-// Login is the handler for the login route
+// Login ... handler for POST /user/login
 func (server *Server) Login(c *gin.Context) {
 	user := models.User{}
 	var err error
 
-	if err := c.ShouldBindJSON(&user); err != nil {
+	if err := c.ShouldBind(&user); err != nil {
 		c.JSON(500, gin.H{"error": err})
 		fmt.Println(err)
 		return
@@ -73,7 +88,7 @@ func (server *Server) Login(c *gin.Context) {
 	}
 }
 
-// SignIn is a utility function used by Login() which finds user via mail, checks his password and calls auth.CreateSession()
+// SignIn ... utility function used by Login
 func (server *Server) SignIn(email, password string) (string, error) {
 	var err error
 
@@ -94,21 +109,47 @@ func (server *Server) SignIn(email, password string) (string, error) {
 	return auth.CreateSession(user.ID, user.Type)
 }
 
-// ShowUser fetches data of the user by his id
-func (server *Server) ShowUser(c *gin.Context) {
+// RenderUser ... display the user profile
+func (server *Server) RenderUser(c *gin.Context) {
 	uid, err := strconv.ParseUint(c.Param("id"), 10, 64)
 	if err != nil {
 		c.JSON(500, gin.H{"error": err})
 		return
 	}
-	fmt.Println("uid", uid)
 	user := models.User{}
 	fetchedUser, err := user.FetchByID(server.DB, uid)
-	c.JSON(200, gin.H{"user": fetchedUser})
+	if err != nil {
+		c.JSON(500, gin.H{"error": err})
+		return
+	}
+	c.HTML(200, "viewUser.html", gin.H{
+		"title": "View Profile | Teastore",
+		"user":  fetchedUser,
+	})
+}
+
+// RenderEditUser ... edit user page
+func (server *Server) RenderEditUser(c *gin.Context) {
+	uidInterface, _ := c.Get("uid")
+	uid, err := strconv.ParseUint(fmt.Sprintf("%v", uidInterface), 10, 64)
+	if err != nil {
+		c.JSON(500, gin.H{"error": err})
+		return
+	}
+	user := models.User{}
+	fetchedUser, err := user.FetchByID(server.DB, uid)
+	if err != nil {
+		c.JSON(500, gin.H{"error": err})
+		return
+	}
+	c.HTML(200, "editUser.html", gin.H{
+		"title": "Edit Profile | Teastore",
+		"user":  fetchedUser,
+	})
 }
 
 // UpdateUser updates the detials of the user sending the request
-func (server *Server) UpdateUser(c *gin.Context) {
+func (server *Server) UpdateUserByID(c *gin.Context) {
 	uidInterface, _ := c.Get("uid")
 	uid, err := strconv.ParseUint(fmt.Sprintf("%v", uidInterface), 10, 64)
 
@@ -119,7 +160,7 @@ func (server *Server) UpdateUser(c *gin.Context) {
 
 	user := models.User{}
 
-	if err := c.ShouldBindJSON(&user); err != nil {
+	if err := c.ShouldBind(&user); err != nil {
 		c.JSON(500, gin.H{"error": err})
 		return
 	}
@@ -133,12 +174,10 @@ func (server *Server) UpdateUser(c *gin.Context) {
 	}
 
 	c.JSON(200, gin.H{"updated": user})
-	return
-
 }
 
 // DeleteUser removes the requesting user
-func (server *Server) DeleteUser(c *gin.Context) {
+func (server *Server) DeleteUserByID(c *gin.Context) {
 	uidInterface, _ := c.Get("uid")
 	uid, err := strconv.ParseUint(fmt.Sprintf("%v", uidInterface), 10, 64)
 
@@ -157,6 +196,4 @@ func (server *Server) DeleteUser(c *gin.Context) {
 	}
 
 	c.JSON(200, gin.H{"message": "success"})
-	return
-
 }

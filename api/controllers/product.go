@@ -7,12 +7,27 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// ShowAllProducts ...
+func (server *Server) RenderAllProducts(c *gin.Context) {
+	product := models.Product{}
+	products, err := product.FetchAll(server.DB)
+	if err != nil {
+		c.JSON(500, gin.H{"error": err})
+		return
+	}
+
+	c.HTML(200, "listProduct.html", gin.H{
+		"title":    "Dashboard | TEASTORE",
+		"products": products,
+	})
+}
+
 // AddProduct ... adds new product in the db
 func (server *Server) AddProduct(c *gin.Context) {
 	product := models.Product{}
 	var err error
 
-	if err := c.ShouldBindJSON(&product); err != nil {
+	if err := c.ShouldBind(&product); err != nil {
 		c.JSON(500, gin.H{"error": err})
 		return
 	}
@@ -35,61 +50,66 @@ func (server *Server) AddProduct(c *gin.Context) {
 	c.JSON(200, gin.H{"message": "success"})
 }
 
-// ShowProduct fetches data of the product by id
-func (server *Server) ShowProduct(c *gin.Context) {
-	path := c.Param("path")
-	product := fmt.Sprint("tea-", path, ".html")
-	// product := models.Product{}
-	// fetchedProduct, err := product.FetchByID(server.DB, path)
-	// if err != nil {
-	// 	c.JSON(500, gin.H{"error": err})
-	// 	return
-	// }
-	// c.JSON(200, gin.H{"product": fetchedProduct})
-	c.HTML(200, product, gin.H{
-		"title": "Gin is cool",
+// RenderProduct fetches data of the product by id (path)
+func (server *Server) RenderProduct(c *gin.Context) {
+	id := c.Param("id")
+	product := models.Product{}
+	fetchedProduct, err := product.FetchByID(server.DB, id)
+	if err != nil {
+		c.JSON(500, gin.H{"error": err})
+		return
+	}
+	c.HTML(200, "viewProduct.html", gin.H{
+		"title":   "View Product | Teastore",
+		"product": fetchedProduct,
 	})
 }
 
-// UpdateProduct updates the detials of the product
-func (server *Server) UpdateProduct(c *gin.Context) {
+// RenderEditProduct fetches data of the product by id (path)
+func (server *Server) RenderEditProduct(c *gin.Context) {
+	id := c.Param("id")
 	product := models.Product{}
-
-	if err := c.ShouldBindJSON(&product); err != nil {
-		c.JSON(500, gin.H{"error": err})
-		return
-	}
-
-	_, err := product.Update(server.DB, product.Path)
-
+	fetchedProduct, err := product.FetchByID(server.DB, id)
 	if err != nil {
 		c.JSON(500, gin.H{"error": err})
-		fmt.Println(err)
 		return
 	}
-
-	c.JSON(200, gin.H{"updated": product})
-	return
-
+	c.HTML(200, "editProduct.html", gin.H{
+		"title":   "Edit Product | Teastore",
+		"product": fetchedProduct,
+	})
 }
 
-// DeleteProduct removes the requested product
-func (server *Server) DeleteProduct(c *gin.Context) {
+// UpdateProductByID updates the detials of the product
+func (server *Server) UpdateProductByID(c *gin.Context) {
+	id := c.Param("id")
 	product := models.Product{}
-
-	if err := c.ShouldBindJSON(&product); err != nil {
+	if err := c.ShouldBind(&product); err != nil {
 		c.JSON(500, gin.H{"error": err})
 		return
 	}
-
-	_, err := product.Delete(server.DB, product.Path)
-
+	_, err := product.Update(server.DB, id)
 	if err != nil {
 		c.JSON(500, gin.H{"error": err})
 		fmt.Println(err)
 		return
 	}
+	c.JSON(200, gin.H{"updated": product})
+}
 
+// DeleteProductByID removes the requested product
+func (server *Server) DeleteProductByID(c *gin.Context) {
+	id := c.Param("id")
+	product := models.Product{}
+	if err := c.ShouldBind(&product); err != nil {
+		c.JSON(500, gin.H{"error": err})
+		return
+	}
+	_, err := product.Delete(server.DB, id)
+	if err != nil {
+		c.JSON(500, gin.H{"error": err})
+		fmt.Println(err)
+		return
+	}
 	c.JSON(200, gin.H{"updated": "success"})
-	return
 }
