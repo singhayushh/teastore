@@ -22,7 +22,7 @@ func AuthenticationMiddleware(role string) gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-		if role == "admin" && utype != role {
+		if role == "Admin" && utype != role {
 			c.JSON(401, gin.H{"error": "Not Admin"})
 			c.Abort()
 			return
