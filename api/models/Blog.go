@@ -37,21 +37,20 @@ func (blog *Blog) Validate(action string) error {
 	blog.Cover = strings.TrimSpace(blog.Cover)
 	blog.Author = strings.TrimSpace(blog.Author)
 	if blog.Title == "" {
-		return errors.New("Title is required")
+		return errors.New("title is required")
 	}
 	if blog.Cover == "" {
 		blog.Cover = "https://raw.githubusercontent.com/Simulacra-Technologies/teastore/master/templates/Cover%20Not%20Available.png"
 	}
 	if blog.Author == "" {
-		return errors.New("Author is required")
+		return errors.New("author is required")
 	}
 	return nil
 }
 
 // Save the blog in the db
 func (blog *Blog) Save(db *gorm.DB) (*Blog, error) {
-	var err error
-	err = db.Debug().Create(&blog).Error
+	err := db.Debug().Create(&blog).Error
 	if err != nil {
 		return nil, err
 	}
@@ -60,9 +59,8 @@ func (blog *Blog) Save(db *gorm.DB) (*Blog, error) {
 
 // FetchAll returns an array of Blogs
 func (blog *Blog) FetchAll(db *gorm.DB) (*[]Blog, error) {
-	var err error
 	blogs := []Blog{}
-	err = db.Debug().Model(&Blog{}).Find(&blogs).Error
+	err := db.Debug().Model(&Blog{}).Find(&blogs).Error
 	if err != nil {
 		return nil, err
 	}
