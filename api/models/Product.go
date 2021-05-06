@@ -92,7 +92,7 @@ func (product *Product) FetchByID(db *gorm.DB, path string) (*Product, error) {
 }
 
 // Update currently allows changing the image, description, price, stock
-func (product *Product) Update(db *gorm.DB, path string) (*Product, error) {
+func (product *Product) Update(db *gorm.DB, id string) (*Product, error) {
 
 	err := product.Validate("update")
 	if err != nil {
@@ -100,9 +100,10 @@ func (product *Product) Update(db *gorm.DB, path string) (*Product, error) {
 	}
 
 	// Update the product
-	db = db.Debug().Model(&Product{}).Where("path = ?", path).Take(&Product{}).UpdateColumns(
+	db = db.Debug().Model(&Product{}).Where("id = ?", id).Take(&Product{}).UpdateColumns(
 		map[string]interface{}{
 			"name":        product.Name,
+			"path":        product.Path,
 			"image":       product.Image,
 			"description": product.Description,
 			"price":       product.Price,
@@ -115,7 +116,7 @@ func (product *Product) Update(db *gorm.DB, path string) (*Product, error) {
 	}
 
 	// Fetch the product
-	err = db.Debug().Model(&Product{}).Where("path = ?", path).Take(&product).Error
+	err = db.Debug().Model(&Product{}).Where("id = ?", id).Take(&product).Error
 	if err != nil {
 		return nil, err
 	}
@@ -123,9 +124,9 @@ func (product *Product) Update(db *gorm.DB, path string) (*Product, error) {
 }
 
 // Delete the product from the database
-func (product *Product) Delete(db *gorm.DB, path string) (int64, error) {
+func (product *Product) Delete(db *gorm.DB, id string) (int64, error) {
 
-	db = db.Debug().Model(&Product{}).Where("path = ?", path).Take(&Product{}).Delete(&Product{})
+	db = db.Debug().Model(&Product{}).Where("id = ?", id).Take(&Product{}).Delete(&Product{})
 
 	if db.Error != nil {
 		return 0, db.Error
