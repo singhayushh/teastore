@@ -3,37 +3,46 @@ package controllers
 import "teastore/api/middlewares"
 
 func (server *Server) initRoutes() {
-	server.Router.GET("/ping", Ping)
 	server.Router.GET("/", RenderHome)
 	server.Router.GET("/about", RenderAbout)
 	server.Router.GET("/contact", RenderContact)
+	server.Router.GET("/dashboard", middlewares.AuthenticationMiddleware("Admin"), server.RenderDashboard)
 
-	userRoute := server.Router.Group("/users")
+	userRoute := server.Router.Group("/user")
 	{
-		userRoute.GET("/register", RenderRegister)
 		userRoute.GET("/login", RenderLogin)
-		userRoute.GET("/view/:id", server.ShowUser)
-		userRoute.POST("/register", middlewares.PasserMiddleware(), server.Register)
+		userRoute.GET("/register", RenderRegister)
+		userRoute.GET("/edit", server.RenderEditUser)
+		userRoute.GET("/view/:id", server.RenderUser)
+
 		userRoute.POST("/login", middlewares.PasserMiddleware(), server.Login)
-		userRoute.POST("/edit", middlewares.AuthenticationMiddleware(""), server.UpdateUser)
-		userRoute.POST("/delete", middlewares.AuthenticationMiddleware(""), server.DeleteUser)
+		userRoute.POST("/register", middlewares.PasserMiddleware(), server.Register)
+
+		userRoute.PUT("/:id", middlewares.AuthenticationMiddleware(""), server.UpdateUserByID)
+		userRoute.DELETE("/:id", middlewares.AuthenticationMiddleware("Admin"), server.DeleteUserByID)
 	}
 
 	productRoute := server.Router.Group("/products")
 	{
-		productRoute.GET("/", server.ShowAllProducts)
-		productRoute.GET("/view/:path", server.ShowProduct)
-		productRoute.POST("/add", middlewares.AuthenticationMiddleware("admin"), server.AddProduct)
-		productRoute.POST("/edit", middlewares.AuthenticationMiddleware("admin"), server.UpdateProduct)
-		productRoute.POST("/delete", middlewares.AuthenticationMiddleware("admin"), server.DeleteProduct)
+		productRoute.GET("/", server.RenderAllProducts)
+		productRoute.GET("/view/:id", server.RenderProduct)
+
+		productRoute.GET("/edit/:id", middlewares.AuthenticationMiddleware("Admin"), server.RenderEditProduct)
+
+		productRoute.POST("/add", middlewares.AuthenticationMiddleware("Admin"), server.AddProduct)
+		productRoute.PUT("/:id", middlewares.AuthenticationMiddleware("Admin"), server.UpdateProductByID)
+		productRoute.DELETE("/:id", middlewares.AuthenticationMiddleware("Admin"), server.DeleteProductByID)
 	}
 
 	blogRoute := server.Router.Group("/blogs")
 	{
-		blogRoute.GET("/", server.ShowAllBlogs)
-		blogRoute.GET("/view/:path", server.ShowBlog)
-		blogRoute.POST("/create", middlewares.AuthenticationMiddleware("admin"), server.CreateBlog)
-		blogRoute.POST("/edit", middlewares.AuthenticationMiddleware("admin"), server.UpdateBlog)
-		blogRoute.POST("/delete", middlewares.AuthenticationMiddleware("admin"), server.DeleteBlog)
+		blogRoute.GET("/", server.RenderAllBlogs)
+		blogRoute.GET("/view/:id", server.RenderBlog)
+
+		blogRoute.GET("/edit/:id", middlewares.AuthenticationMiddleware("Admin"), server.RenderEditBlog)
+
+		blogRoute.POST("/create", middlewares.AuthenticationMiddleware("Admin"), server.CreateBlog)
+		blogRoute.PUT("/:id", middlewares.AuthenticationMiddleware("Admin"), server.UpdateBlogByID)
+		blogRoute.DELETE("/:id", middlewares.AuthenticationMiddleware("Admin"), server.DeleteBlogByID)
 	}
 }
