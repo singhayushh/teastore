@@ -43,24 +43,23 @@ func (product *Product) Validate(action string) error {
 		return err
 	}
 	if product.Name == "" {
-		return errors.New("Name is required")
+		return errors.New("name is required")
 	}
 	if product.Image == "" {
 		product.Image = "https://raw.githubusercontent.com/Simulacra-Technologies/teastore/master/templates/Image%20Not%20Available.png"
 	}
 	if product.Description == "" {
-		return errors.New("Description is required")
+		return errors.New("description is required")
 	}
 	if product.Price == "" {
-		return errors.New("Price is required")
+		return errors.New("price is required")
 	}
 	return nil
 }
 
 // Save the product in the db
 func (product *Product) Save(db *gorm.DB) (*Product, error) {
-	var err error
-	err = db.Debug().Create(&product).Error
+	err := db.Debug().Create(&product).Error
 	if err != nil {
 		return nil, err
 	}
@@ -69,9 +68,8 @@ func (product *Product) Save(db *gorm.DB) (*Product, error) {
 
 // FetchAll returns an array of Products
 func (product *Product) FetchAll(db *gorm.DB) (*[]Product, error) {
-	var err error
 	products := []Product{}
-	err = db.Debug().Model(&Product{}).Find(&products).Error
+	err := db.Debug().Model(&Product{}).Find(&products).Error
 	if err != nil {
 		return nil, err
 	}
@@ -80,8 +78,7 @@ func (product *Product) FetchAll(db *gorm.DB) (*[]Product, error) {
 
 // FetchByID needs the path to search for the corresponding product.
 func (product *Product) FetchByID(db *gorm.DB, path string) (*Product, error) {
-	var err error
-	err = db.Debug().Model(Product{}).Where("path = ?", path).Take(&product).Error
+	err := db.Debug().Model(Product{}).Where("path = ?", path).Take(&product).Error
 	if err != nil {
 		return nil, err
 	}

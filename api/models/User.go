@@ -55,27 +55,27 @@ func (user *User) Validate(action string) error {
 	switch strings.ToLower(action) {
 	case "login":
 		if user.Email == "" {
-			return errors.New("Email is required")
+			return errors.New("email is required")
 		}
 		if user.Password == "" {
-			return errors.New("Password is required")
+			return errors.New("password is required")
 		}
 		if err := checkmail.ValidateFormat(user.Email); err != nil {
-			return errors.New("Invalid Email")
+			return errors.New("invalid email")
 		}
 		return nil
 	case "update":
 		if user.Name == "" {
-			return errors.New("Name is required")
+			return errors.New("name is required")
 		}
 		if user.Email == "" {
-			return errors.New("Email is required")
+			return errors.New("email is required")
 		}
 		if err := checkmail.ValidateFormat(user.Email); err != nil {
-			return errors.New("Invalid Email")
+			return errors.New("invalid email")
 		}
 		if user.Address == "" {
-			return errors.New("Address is required")
+			return errors.New("address is required")
 		}
 		if user.Image == "" {
 			user.Image = "https://raw.githubusercontent.com/Simulacra-Technologies/teastore/master/templates/profile.png"
@@ -84,19 +84,19 @@ func (user *User) Validate(action string) error {
 	default:
 		user.ID = 0 // gets auto set anyway
 		if user.Name == "" {
-			return errors.New("Name is required")
+			return errors.New("name is required")
 		}
 		if user.Address == "" {
-			return errors.New("Address is required")
+			return errors.New("address is required")
 		}
 		if user.Email == "" {
-			return errors.New("Email is required")
+			return errors.New("email is required")
 		}
 		if user.Password == "" {
-			return errors.New("Password is required")
+			return errors.New("password is required")
 		}
 		if err := checkmail.ValidateFormat(user.Email); err != nil {
-			return errors.New("Invalid Email")
+			return errors.New("invalid email")
 		}
 		return nil
 	}
@@ -104,8 +104,7 @@ func (user *User) Validate(action string) error {
 
 // Save the user in the database
 func (user *User) Save(db *gorm.DB) (*User, error) {
-	var err error
-	err = db.Debug().Create(&user).Error
+	err := db.Debug().Create(&user).Error
 
 	if err != nil {
 		return nil, err
@@ -115,9 +114,8 @@ func (user *User) Save(db *gorm.DB) (*User, error) {
 
 // FetchAll returns an array of Users listing upto 100 users
 func (user *User) FetchAll(db *gorm.DB) (*[]User, error) {
-	var err error
 	users := []User{}
-	err = db.Debug().Model(&User{}).Find(&users).Error
+	err := db.Debug().Model(&User{}).Find(&users).Error
 	if err != nil {
 		return nil, err
 	}
@@ -126,8 +124,7 @@ func (user *User) FetchAll(db *gorm.DB) (*[]User, error) {
 
 // FetchByID needs a uint64 uid to search for the corresponding user
 func (user *User) FetchByID(db *gorm.DB, uid uint64) (*User, error) {
-	var err error
-	err = db.Debug().Model(User{}).Where("id = ?", uid).Take(&user).Error
+	err := db.Debug().Model(User{}).Where("id = ?", uid).Take(&user).Error
 	if err != nil {
 		return nil, err
 	}
