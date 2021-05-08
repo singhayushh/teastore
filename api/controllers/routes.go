@@ -18,8 +18,8 @@ func (server *Server) initRoutes() {
 		userRoute.POST("/login", middlewares.PasserMiddleware(), server.Login)
 		userRoute.POST("/register", middlewares.PasserMiddleware(), server.Register)
 
-		userRoute.PUT("/:id", middlewares.AuthenticationMiddleware(""), server.UpdateUserByID)
-		userRoute.DELETE("/:id", middlewares.AuthenticationMiddleware("Admin"), server.DeleteUserByID)
+		userRoute.POST("/edit/:id", middlewares.AuthenticationMiddleware(""), server.UpdateUserByID)
+		userRoute.GET("/delete/:id", middlewares.AuthenticationMiddleware("Admin"), server.DeleteUserByID)
 	}
 
 	productRoute := server.Router.Group("/products")
@@ -27,11 +27,12 @@ func (server *Server) initRoutes() {
 		productRoute.GET("/", server.RenderAllProducts)
 		productRoute.GET("/view/:id", server.RenderProduct)
 
+		productRoute.GET("/add", middlewares.AuthenticationMiddleware("Admin"), server.RenderAddProduct)
 		productRoute.GET("/edit/:id", middlewares.AuthenticationMiddleware("Admin"), server.RenderEditProduct)
 
 		productRoute.POST("/add", middlewares.AuthenticationMiddleware("Admin"), server.AddProduct)
-		productRoute.PUT("/:id", middlewares.AuthenticationMiddleware("Admin"), server.UpdateProductByID)
-		productRoute.DELETE("/:id", middlewares.AuthenticationMiddleware("Admin"), server.DeleteProductByID)
+		productRoute.POST("/edit/:id", middlewares.AuthenticationMiddleware("Admin"), server.UpdateProductByID)
+		productRoute.GET("/delete/:id", middlewares.AuthenticationMiddleware("Admin"), server.DeleteProductByID)
 	}
 
 	blogRoute := server.Router.Group("/blogs")
@@ -39,10 +40,11 @@ func (server *Server) initRoutes() {
 		blogRoute.GET("/", server.RenderAllBlogs)
 		blogRoute.GET("/view/:id", server.RenderBlog)
 
+		blogRoute.GET("/add", middlewares.AuthenticationMiddleware("Admin"), server.RenderAddBlog)
 		blogRoute.GET("/edit/:id", middlewares.AuthenticationMiddleware("Admin"), server.RenderEditBlog)
 
-		blogRoute.POST("/create", middlewares.AuthenticationMiddleware("Admin"), server.CreateBlog)
-		blogRoute.PUT("/:id", middlewares.AuthenticationMiddleware("Admin"), server.UpdateBlogByID)
-		blogRoute.DELETE("/:id", middlewares.AuthenticationMiddleware("Admin"), server.DeleteBlogByID)
+		blogRoute.POST("/add", middlewares.AuthenticationMiddleware("Admin"), server.CreateBlog)
+		blogRoute.POST("/edit/:id", middlewares.AuthenticationMiddleware("Admin"), server.UpdateBlogByID)
+		blogRoute.GET("/delete/:id", middlewares.AuthenticationMiddleware("Admin"), server.DeleteBlogByID)
 	}
 }

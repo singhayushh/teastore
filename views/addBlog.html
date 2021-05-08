@@ -1,3 +1,12 @@
 {{ template "header.html" .}}
 
+<form action="/blogs/create" method="post">
+    <input type="text" name="path" id="path">
+    <input type="text" name="title" id="title">
+    <input type="text" name="cover" id="cover">
+    <input type="text" name="author" id="author">
+    <input type="text" name="text" id="text">
+    <button type="submit">Add</button>
+</form>
+
 {{ template "footer.html" .}}
