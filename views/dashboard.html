@@ -1,5 +1,86 @@
 {{ template "header.html" .}}
 
+<div class="dashboard">
+    <h1>Users</h1>
 
+    <table>
+        <thead>
+            <tr>
+                <td width="10%">User ID</td>
+                <td width="20%">Name</td>
+                <td width="20%">Email</td>
+                <td width="40%">Address</td>
+                <td width="10%">Actions</td>
+            </tr>
+        </thead>
+        <tbody>
+            {{range $i,$j := .users}}
+            <tr>
+                <td>{{$j.ID}}</td>
+                <td>{{$j.Name}}</td>
+                <td>{{$j.Email}}</td>
+                <td>{{$j.Address}}</td>
+                <td></td>
+            </tr>
+            {{end}}
+        </tbody>
+    </table>
+
+    <h1>Products</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <td width="10%">ID</td>
+                <td width="15%">Path</td>
+                <td width="25%">Name</td>
+                <td width="15%">Price</td>
+                <td width="15%">Stock</td>
+                <td width="10%">Hits</td>
+                <td width="10%">Actions</td>
+            </tr>
+        </thead>
+        <tbody>
+            {{range $i,$j := .products}}
+            <tr>
+                <td>{{$j.ID}}</td>
+                <td>{{$j.Path}}</td>
+                <td>{{$j.Name}}</td>
+                <td>{{$j.Price}}</td>
+                <td>{{$j.Stock}}</td>
+                <td>{{$j.Hits}}</td>
+                <td></td>
+            </tr>
+            {{end}}
+        </tbody>
+    </table>
+
+    <h1>Blogs</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <td width="10%">ID</td>
+                <td width="15%">Path</td>
+                <td width="25%">Title</td>
+                <td width="25%">Author</td>
+                <td width="15%">Hits</td>
+                <td width="10%">Actions</td>
+            </tr>
+        </thead>
+        <tbody>
+            {{range $i,$j := .blogs}}
+            <tr>
+                <td>{{$j.ID}}</td>
+                <td>{{$j.Path}}</td>
+                <td>{{$j.Title}}</td>
+                <td>{{$j.Author}}</td>
+                <td>{{$j.Hits}}</td>
+                <td></td>
+            </tr>
+            {{end}}
+        </tbody>
+    </table>
+</div>
 
 {{ template "footer.html" .}}

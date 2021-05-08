@@ -736,3 +736,11 @@ a, a:hover, a:active, a:visited {
   }
 }
 /*# sourceMappingURL=style.css.map */
+
+.dashboard {
+  padding: 40px;
+}
+
+table {
+  width: 100%;
+}
