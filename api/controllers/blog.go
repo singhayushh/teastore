@@ -3,6 +3,7 @@ package controllers
 import (
 	"fmt"
 	"teastore/api/models"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -65,6 +66,13 @@ func (server *Server) RenderBlog(c *gin.Context) {
 	})
 }
 
+// RenderAddBlog
+func (server *Server) RenderAddBlog(c *gin.Context) {
+	c.HTML(200, "addBlog.html", gin.H{
+		"title": "Add blog | Teastore",
+	})
+}
+
 // RenderEditBlog fetches data of the blog by id (path)
 func (server *Server) RenderEditBlog(c *gin.Context) {
 	id := c.Param("id")
@@ -89,7 +97,10 @@ func (server *Server) UpdateBlogByID(c *gin.Context) {
 		return
 	}
 
-	_, err := blog.Update(server.DB, blog.Path)
+	currentTime := time.Now()
+	blog.UpdatedAt = currentTime.Format("2006-01-02")
+
+	_, err := blog.Update(server.DB, blog.ID)
 
 	if err != nil {
 		c.JSON(500, gin.H{"error": err})
@@ -109,7 +120,7 @@ func (server *Server) DeleteBlogByID(c *gin.Context) {
 		return
 	}
 
-	_, err := blog.Delete(server.DB, blog.Path)
+	_, err := blog.Delete(server.DB, blog.ID)
 
 	if err != nil {
 		c.JSON(500, gin.H{"error": err})

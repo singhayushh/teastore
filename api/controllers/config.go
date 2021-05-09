@@ -52,6 +52,9 @@ func (server *Server) InitServer(Port string) {
 	server.Router.Static("/css", "views/assets/css")
 	server.Router.Static("/js", "views/assets/js")
 	server.Router.Static("/img", "views/assets/img")
+	server.Router.Static("/font", "views/assets/img")
+	server.Router.Static("/scss", "views/assets/img")
+	server.Router.Static("/vendor", "views/assets/vendor")
 
 	// Running the server
 	fmt.Println("Listening to port", Port)
