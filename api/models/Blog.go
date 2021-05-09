@@ -13,15 +13,15 @@ import (
 
 // Blog schema - CUD to admin only
 type Blog struct {
-	ID        uint64    `gorm:"primary_key;auto_increment" json:"id" form:"id"`
-	Path      string    `gorm:"unique" json:"path" form:"path"`
-	Title     string    `gorm:"not null;" json:"title" form:"title"`
-	Cover     string    `gorm:"default:'https://covers.unsplash.com/photo-1523920290228-4f321a939b4c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=756&q=80'" json:"cover" form:"cover"`
-	Author    string    `gorm:"not null;" json:"author" form:"author"`
-	Text      string    `gorm:"not null;" json:"text" form:"text"`
-	Hits      uint64    `gorm:"default:0" json:"hits" form:"hits"`
-	CreatedAt time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`
-	UpdatedAt time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at"`
+	ID        uint64 `gorm:"primary_key;auto_increment" json:"id" form:"id"`
+	Path      string `gorm:"unique" json:"path" form:"path"`
+	Title     string `gorm:"not null;" json:"title" form:"title"`
+	Cover     string `gorm:"default:'https://covers.unsplash.com/photo-1523920290228-4f321a939b4c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=756&q=80'" json:"cover" form:"cover"`
+	Author    string `gorm:"not null;" json:"author" form:"author"`
+	Text      string `gorm:"not null;" json:"text" form:"text"`
+	Hits      uint64 `gorm:"default:0" json:"hits" form:"hits"`
+	CreatedAt string `json:"created_at"`
+	UpdatedAt string `json:"updated_at"`
 }
 
 // Validate is a utility function to format the blog according to schema
@@ -33,9 +33,12 @@ func (blog *Blog) Validate(action string) error {
 			blog.Path = utils.GenerateTextHash(6)
 		}
 	}
+	currentTime := time.Now()
 	blog.Title = strings.TrimSpace(blog.Title)
 	blog.Cover = strings.TrimSpace(blog.Cover)
 	blog.Author = strings.TrimSpace(blog.Author)
+	blog.UpdatedAt = currentTime.Format("2006-01-02")
+	blog.CreatedAt = currentTime.Format("2006-01-02")
 	if blog.Title == "" {
 		return errors.New("title is required")
 	}

@@ -13,15 +13,15 @@ import (
 
 // User schema
 type User struct {
-	ID        uint64    `gorm:"primary_key;auto_increment" json:"id" form:"id"`
-	Type      string    `gorm:"size:15;default:'Customer'" json:"type" form:"type"` // Either an Admin or Customer(by default)
-	Name      string    `gorm:"size:255;not null;" json:"name" form:"name"`
-	Email     string    `gorm:"size:100;not null;unique" json:"email" form:"email"`
-	Password  string    `gorm:"size:100;not null;" json:"password" form:"password"`
-	Image     string    `gorm:"default:'https://raw.githubusercontent.com/Simulacra-Technologies/teastore/master/templates/profile.png'" json:"image" form:"image"`
-	Address   string    `gorm:"default:'Blank'" json:"address" form:"address"`
-	CreatedAt time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`
-	UpdatedAt time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at"`
+	ID        uint64 `gorm:"primary_key;auto_increment" json:"id" form:"id"`
+	Type      string `gorm:"size:15;default:'Customer'" json:"type" form:"type"` // Either an Admin or Customer(by default)
+	Name      string `gorm:"size:255;not null;" json:"name" form:"name"`
+	Email     string `gorm:"size:100;not null;unique" json:"email" form:"email"`
+	Password  string `gorm:"size:100;not null;" json:"password" form:"password"`
+	Image     string `gorm:"default:'https://raw.githubusercontent.com/Simulacra-Technologies/teastore/master/templates/profile.png'" json:"image" form:"image"`
+	Address   string `gorm:"default:'Blank'" json:"address" form:"address"`
+	CreatedAt string `json:"created_at"`
+	UpdatedAt string `json:"updated_at"`
 }
 
 // Hash - generates hash of the string passed as params and return the hashed password and err which is nil if no errors are thrown
@@ -47,6 +47,8 @@ func (user *User) EncryptPassword() error {
 // Validate function is a utility function that implements password hashing, updating the time entries etc and checks if entries are valid, based on actions being used for (login, update etc)
 func (user *User) Validate(action string) error {
 
+	currentTime := time.Now()
+
 	user.Name = strings.TrimSpace(user.Name)
 	user.Email = html.EscapeString(strings.TrimSpace(user.Email))
 	user.Image = html.EscapeString(strings.TrimSpace(user.Image))
@@ -65,6 +67,7 @@ func (user *User) Validate(action string) error {
 		}
 		return nil
 	case "update":
+		user.UpdatedAt = currentTime.Format("2006-01-02")
 		if user.Name == "" {
 			return errors.New("name is required")
 		}
@@ -83,6 +86,8 @@ func (user *User) Validate(action string) error {
 		return nil
 	default:
 		user.ID = 0 // gets auto set anyway
+		user.UpdatedAt = currentTime.Format("2006-01-02")
+		user.CreatedAt = currentTime.Format("2006-01-02")
 		if user.Name == "" {
 			return errors.New("name is required")
 		}

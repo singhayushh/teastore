@@ -13,21 +13,22 @@ import (
 
 // Product schema - CUD to admin only
 type Product struct {
-	ID          uint64    `gorm:"primary_key;auto_increment" json:"id" form:"id"`
-	Path        string    `gorm:"size:6;unique" json:"path" form:"path"`
-	Name        string    `gorm:"size:255;not null;" json:"name" form:"name"`
-	Image       string    `gorm:"default:'https://raw.githubusercontent.com/Simulacra-Technologies/teastore/master/templates/Image%20Not%20Available.png'" json:"image" form:"image"`
-	Description string    `gorm:"not null;" json:"description" form:"description"`
-	Price       string    `gorm:"not null;" json:"price" form:"price"`
-	Stock       string    `gorm:"default:'TRUE';" json:"stock" form:"stock"`
-	Hits        uint64    `gorm:"default:0" json:"hits" form:"hits"`
-	CreatedAt   time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`
-	UpdatedAt   time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at"`
+	ID          uint64 `gorm:"primary_key;auto_increment" json:"id" form:"id"`
+	Path        string `gorm:"size:6;unique" json:"path" form:"path"`
+	Name        string `gorm:"size:255;not null;" json:"name" form:"name"`
+	Image       string `gorm:"default:'https://raw.githubusercontent.com/Simulacra-Technologies/teastore/master/templates/Image%20Not%20Available.png'" json:"image" form:"image"`
+	Description string `gorm:"not null;" json:"description" form:"description"`
+	Price       string `gorm:"not null;" json:"price" form:"price"`
+	Stock       string `gorm:"default:'TRUE';" json:"stock" form:"stock"`
+	Hits        uint64 `gorm:"default:0" json:"hits" form:"hits"`
+	CreatedAt   string `json:"created_at"`
+	UpdatedAt   string `json:"updated_at"`
 }
 
 // Validate is a utility function to format the product according to schema
 func (product *Product) Validate(action string) error {
 	var err error
+	currentTime := time.Now()
 	if action == "" {
 		product.ID = 0
 		product.Path = html.EscapeString(strings.TrimSpace(product.Path))
@@ -39,9 +40,13 @@ func (product *Product) Validate(action string) error {
 	product.Image = strings.TrimSpace(product.Image)
 	product.Description = strings.TrimSpace(product.Description)
 	product.Price = strings.TrimSpace(product.Price)
+	product.CreatedAt = currentTime.Format("2006-01-02")
+	product.UpdatedAt = currentTime.Format("2006-01-02")
+
 	if err != nil {
 		return err
 	}
+
 	if product.Name == "" {
 		return errors.New("name is required")
 	}
