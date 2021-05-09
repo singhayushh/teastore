@@ -3,6 +3,7 @@ package controllers
 import (
 	"fmt"
 	"teastore/api/models"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -95,6 +96,9 @@ func (server *Server) UpdateBlogByID(c *gin.Context) {
 		c.JSON(500, gin.H{"error": err})
 		return
 	}
+
+	currentTime := time.Now()
+	blog.UpdatedAt = currentTime.Format("2006-01-02")
 
 	_, err := blog.Update(server.DB, blog.ID)
 

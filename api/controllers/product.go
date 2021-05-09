@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strconv"
 	"teastore/api/models"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -101,6 +102,8 @@ func (server *Server) UpdateProductByID(c *gin.Context) {
 		c.JSON(500, gin.H{"error": err})
 		return
 	}
+	currentTime := time.Now()
+	product.UpdatedAt = currentTime.Format("2006-01-02")
 	_, err = product.Update(server.DB, id)
 	if err != nil {
 		c.JSON(500, gin.H{"error": err})

@@ -10,6 +10,7 @@ func (server *Server) initRoutes() {
 
 	userRoute := server.Router.Group("/user")
 	{
+		userRoute.GET("/", server.RenderAllUsers)
 		userRoute.GET("/login", RenderLogin)
 		userRoute.GET("/register", RenderRegister)
 		userRoute.GET("/edit", server.RenderEditUser)

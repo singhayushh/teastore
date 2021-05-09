@@ -9,6 +9,20 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// RenderAllUsers ...
+func (server *Server) RenderAllUsers(c *gin.Context) {
+	user := models.User{}
+	users, err := user.FetchAll(server.DB)
+	if err != nil {
+		c.JSON(500, gin.H{"error": err})
+		return
+	}
+	c.HTML(200, "listUser.html", gin.H{
+		"title": "Dashboard | TEASTORE",
+		"users": users,
+	})
+}
+
 // RenderRegister ...
 func RenderRegister(c *gin.Context) {
 	c.HTML(200, "register.html", gin.H{
@@ -57,7 +71,7 @@ func (server *Server) Register(c *gin.Context) {
 		return
 	}
 
-	c.Redirect(301, "/users/login")
+	c.Redirect(301, "/user/login")
 }
 
 // Login ... handler for POST /user/login
