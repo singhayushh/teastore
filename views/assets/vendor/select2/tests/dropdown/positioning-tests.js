@@ -22,9 +22,12 @@ test('appends to the dropdown parent', function (assert) {
 
     var DropdownAdapter = Utils.Decorate(Dropdown, AttachBody);
 
-    var dropdown = new DropdownAdapter($select, new Options({
-        dropdownParent: $parent
-    }));
+    var dropdown = new DropdownAdapter(
+        $select,
+        new Options({
+            dropdownParent: $parent,
+        })
+    );
 
     assert.equal(
         $parent.children().length,
@@ -65,7 +68,7 @@ test('dropdown is positioned down with static margins', function (assert) {
     $parent.css({
         position: 'static',
         marginTop: '5px',
-        marginLeft: '10px'
+        marginLeft: '10px',
     });
 
     var $container = $('<span>test</span>');
@@ -84,9 +87,12 @@ test('dropdown is positioned down with static margins', function (assert) {
 
     var DropdownAdapter = Utils.Decorate(Dropdown, AttachBody);
 
-    var dropdown = new DropdownAdapter($select, new Options({
-        dropdownParent: $parent
-    }));
+    var dropdown = new DropdownAdapter(
+        $select,
+        new Options({
+            dropdownParent: $parent,
+        })
+    );
 
     var $dropdown = dropdown.render();
 
@@ -125,7 +131,7 @@ test('dropdown is positioned down with absolute offsets', function (assert) {
     $parent.css({
         position: 'absolute',
         top: '10px',
-        left: '5px'
+        left: '5px',
     });
 
     var $container = $('<span>test</span>');
@@ -142,9 +148,12 @@ test('dropdown is positioned down with absolute offsets', function (assert) {
 
     var DropdownAdapter = Utils.Decorate(Dropdown, AttachBody);
 
-    var dropdown = new DropdownAdapter($select, new Options({
-        dropdownParent: $parent
-    }));
+    var dropdown = new DropdownAdapter(
+        $select,
+        new Options({
+            dropdownParent: $parent,
+        })
+    );
 
     var $dropdown = dropdown.render();
 
@@ -191,9 +200,12 @@ test('dropdown is positioned even when not in document', function (assert) {
 
     var DropdownAdapter = Utils.Decorate(Dropdown, AttachBody);
 
-    var dropdown = new DropdownAdapter($select, new Options({
-        dropdownParent: $('html')
-    }));
+    var dropdown = new DropdownAdapter(
+        $select,
+        new Options({
+            dropdownParent: $('html'),
+        })
+    );
 
     var $dropdown = dropdown.render();
 

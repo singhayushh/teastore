@@ -1,10 +1,9 @@
-@import "/variable";
+@import '/variable';
 
 * {
     padding: 0;
     margin: 0;
 }
-
 
 .top__bar {
     background-color: $darkGreen;
@@ -16,19 +15,16 @@
     padding-left: 20px;
     padding-right: 20px;
 
-    .phone{
+    .phone {
         position: relative;
         padding-top: 10px;
         transform: rotate(100deg);
     }
 
-    
-
-     
-    .top__user{
+    .top__user {
         color: white;
     }
-    .top__addtocart{
+    .top__addtocart {
         color: white;
     }
 }
@@ -43,37 +39,37 @@
     padding: 10px 50px;
     justify-content: space-evenly;
     align-items: center;
-    box-shadow:  1px 5px 20px $gray;
+    box-shadow: 1px 5px 20px $gray;
     height: 100px;
 
     .left__nav {
-        a:nth-child(1){
+        a:nth-child(1) {
             position: relative;
             margin-right: 150px;
         }
     }
 
-    .nav__center{
-          img {
-              height: 200px;
-              width: 200px;
-              position: absolute;
-              background-color: white;
-              margin-top: -50px;
+    .nav__center {
+        img {
+            height: 200px;
+            width: 200px;
+            position: absolute;
+            background-color: white;
+            margin-top: -50px;
             transform: translateX(-100px);
             border-radius: 100%;
             padding: 15px;
-          }
+        }
     }
 
     .right__nav {
-        a:nth-child(2){
+        a:nth-child(2) {
             position: relative;
             margin-left: 150px;
         }
     }
 
-    a{
+    a {
         text-decoration: none;
         color: $darkGreen;
         font-weight: bold;
@@ -85,14 +81,6 @@
         }
     }
 }
-
-
-
-
-
-
-
-
 
 /* ==================== TOGGLE SECTION ====================== */
 
@@ -107,25 +95,25 @@
     background-color: white;
     overflow-x: hidden;
     transition: 0.5s;
-  }
-  
-  .overlay-content {
+}
+
+.overlay-content {
     position: relative;
     top: 15%;
     width: 100%;
     text-align: left;
     margin-top: 0px;
-  }
-  
-  .overlay .contact {
-      padding: 10px;
-      background-color: whitesmoke;
-  }
-  .overlay .account {
+}
+
+.overlay .contact {
     padding: 10px;
     background-color: whitesmoke;
-  }
-  .overlay a {
+}
+.overlay .account {
+    padding: 10px;
+    background-color: whitesmoke;
+}
+.overlay a {
     padding: 10px;
     text-decoration: none;
     font-size: 18px;
@@ -133,60 +121,53 @@
     display: block;
     transition: 0.3s;
     font-weight: bold;
-  }
-  
-  .overlay a:hover, .overlay a:focus {
+}
+
+.overlay a:hover,
+.overlay a:focus {
     color: $darkGreen;
-  }
-  
-  .overlay .closebtn {
+}
+
+.overlay .closebtn {
     position: absolute;
     top: 20px;
     right: 45px;
     font-size: 60px;
-  }
-  
-  @media screen and (max-height: 450px) {
-    .overlay a {font-size: 20px}
-    .overlay .closebtn {
-    font-size: 40px;
-    top: 15px;
-    right: 35px;
+}
+
+@media screen and (max-height: 450px) {
+    .overlay a {
+        font-size: 20px;
     }
-  }
+    .overlay .closebtn {
+        font-size: 40px;
+        top: 15px;
+        right: 35px;
+    }
+}
 
+.top__contact span {
+    display: none;
+}
 
+@media (max-width: 1249px) {
+    .top__contact span {
+        display: block;
+    }
+    .top__phone {
+        display: none;
+    }
 
-  .top__contact span {
-      display: none;
-  }
+    .left__nav {
+        display: none;
+    }
+    .right__nav {
+        display: none;
+    }
+}
 
-
-
-
-
-
-
-  @media (max-width :1249px) {
-      .top__contact span{
-               display: block;
-      }
-      .top__phone {
-          display: none;
-      }
-      
-      .left__nav {
-          display: none;
-      }
-      .right__nav {
-          display: none;
-      }
-
-  }
-
-  @media (max-width :707px) {
- 
+@media (max-width: 707px) {
     .top__bar .top__paragraph {
         display: none;
-    }   
-  }
+    }
+}

@@ -12,8 +12,8 @@ var $ = require('jquery');
  *
  * @return {jQuery.Event} a 'keydown' type event.
  */
-function buildKeyDownEvent (keyCode, eventProps) {
-  return $.Event('keydown', $.extend({}, { which: keyCode }, eventProps));
+function buildKeyDownEvent(keyCode, eventProps) {
+    return $.Event('keydown', $.extend({}, { which: keyCode }, eventProps));
 }
 
 /**
@@ -35,45 +35,45 @@ function buildKeyDownEvent (keyCode, eventProps) {
  * @return {null}
  */
 function testAbled(isEnabled, testName, keyCode, eventProps, fn) {
-  test(testName, function (assert) {
-    var $element = $(
-      '<select>' +
-        '<option>one</option>' +
-        '<option>two</option>' +
-      '</select>'
-    );
-    $('#qunit-fixture').append($element);
-    $element.select2({ disabled: !isEnabled });
+    test(testName, function (assert) {
+        var $element = $(
+            '<select>' +
+                '<option>one</option>' +
+                '<option>two</option>' +
+                '</select>'
+        );
+        $('#qunit-fixture').append($element);
+        $element.select2({ disabled: !isEnabled });
 
-    var select2 = $element.data('select2');
-    var $selection = select2.$selection;
+        var select2 = $element.data('select2');
+        var $selection = select2.$selection;
 
-    assert.notOk(select2.isOpen(), 'The instance should not be open');
-    assert.equal(select2.isEnabled(), isEnabled);
+        assert.notOk(select2.isOpen(), 'The instance should not be open');
+        assert.equal(select2.isEnabled(), isEnabled);
 
-    var event = buildKeyDownEvent(keyCode, eventProps);
-    assert.ok(event.which, 'The event\'s key code (.which) should be set');
+        var event = buildKeyDownEvent(keyCode, eventProps);
+        assert.ok(event.which, "The event's key code (.which) should be set");
 
-    $selection.trigger(event);
+        $selection.trigger(event);
 
-    fn(assert, select2);
-  });
+        fn(assert, select2);
+    });
 }
 
 /**
  * Test the given keydown event on an enabled element. See #testAbled for
  * params.
  */
-function testEnabled (testName, keyCode, eventProps, fn) {
-  testAbled(true, testName, keyCode, eventProps, fn);
+function testEnabled(testName, keyCode, eventProps, fn) {
+    testAbled(true, testName, keyCode, eventProps, fn);
 }
 
 /**
  * Test the given keydown event on a disabled element. See #testAbled for
  * params.
  */
-function testDisabled (testName, keyCode, eventProps, fn) {
-  testAbled(false, testName, keyCode, eventProps, fn);
+function testDisabled(testName, keyCode, eventProps, fn) {
+    testAbled(false, testName, keyCode, eventProps, fn);
 }
 
 /**
@@ -84,8 +84,8 @@ function testDisabled (testName, keyCode, eventProps, fn) {
  * @param  {Select2}  select
  * @return {null}
  */
-function assertOpened (assert, select2) {
-  assert.ok(select2.isOpen(), 'The element should be open');
+function assertOpened(assert, select2) {
+    assert.ok(select2.isOpen(), 'The element should be open');
 }
 
 /**
@@ -96,51 +96,48 @@ function assertOpened (assert, select2) {
  * @param  {Select2}  select
  * @return {null}
  */
-function assertNotOpened (assert, select2) {
-  assert.notOk(select2.isOpen(), 'The element should not be open');
+function assertNotOpened(assert, select2) {
+    assert.notOk(select2.isOpen(), 'The element should not be open');
 }
 
 /**
  * ENTER, SPACE, and ALT+DOWN should all open an enabled select2 element.
  */
+testEnabled('enabled element will open on ENTER', KEYS.ENTER, {}, assertOpened);
+testEnabled('enabled element will open on SPACE', KEYS.SPACE, {}, assertOpened);
 testEnabled(
-  'enabled element will open on ENTER',
-  KEYS.ENTER, {},
-  assertOpened
-);
-testEnabled(
-  'enabled element will open on SPACE',
-  KEYS.SPACE, {},
-  assertOpened
-);
-testEnabled(
-  'enabled element will open on ALT+DOWN',
-  KEYS.DOWN, { altKey: true },
-  assertOpened
+    'enabled element will open on ALT+DOWN',
+    KEYS.DOWN,
+    { altKey: true },
+    assertOpened
 );
 
 /**
  * Some other keys triggered on an enabled select2 element should not open it.
  */
 testEnabled(
-  'enabled element will not open on UP',
-  KEYS.UP, {},
-  assertNotOpened
+    'enabled element will not open on UP',
+    KEYS.UP,
+    {},
+    assertNotOpened
 );
 testEnabled(
-  'enabled element will not open on DOWN',
-  KEYS.UP, {},
-  assertNotOpened
+    'enabled element will not open on DOWN',
+    KEYS.UP,
+    {},
+    assertNotOpened
 );
 testEnabled(
-  'enabled element will not open on LEFT',
-  KEYS.UP, {},
-  assertNotOpened
+    'enabled element will not open on LEFT',
+    KEYS.UP,
+    {},
+    assertNotOpened
 );
 testEnabled(
-  'enabled element will not open on RIGHT',
-  KEYS.UP, {},
-  assertNotOpened
+    'enabled element will not open on RIGHT',
+    KEYS.UP,
+    {},
+    assertNotOpened
 );
 
 /*
@@ -148,41 +145,48 @@ testEnabled(
  * one.
  */
 testDisabled(
-  'disabled element will not open on ENTER',
-  KEYS.ENTER, {},
-  assertNotOpened
+    'disabled element will not open on ENTER',
+    KEYS.ENTER,
+    {},
+    assertNotOpened
 );
 testDisabled(
-  'disabled element will not open on SPACE',
-  KEYS.SPACE, {},
-  assertNotOpened
+    'disabled element will not open on SPACE',
+    KEYS.SPACE,
+    {},
+    assertNotOpened
 );
 testDisabled(
-  'disabled element will not open on ALT+DOWN',
-  KEYS.DOWN, { altKey: true },
-  assertNotOpened
+    'disabled element will not open on ALT+DOWN',
+    KEYS.DOWN,
+    { altKey: true },
+    assertNotOpened
 );
 
 /**
  * Other keys should continue to not open a disabled select2 element.
  */
 testDisabled(
-  'disabled element will not open on UP',
-  KEYS.UP, {},
-  assertNotOpened
+    'disabled element will not open on UP',
+    KEYS.UP,
+    {},
+    assertNotOpened
 );
 testDisabled(
-  'disabled element will not open on DOWN',
-  KEYS.UP, {},
-  assertNotOpened
+    'disabled element will not open on DOWN',
+    KEYS.UP,
+    {},
+    assertNotOpened
 );
 testDisabled(
-  'disabled element will not open on LEFT',
-  KEYS.UP, {},
-  assertNotOpened
+    'disabled element will not open on LEFT',
+    KEYS.UP,
+    {},
+    assertNotOpened
 );
 testDisabled(
-  'disabled element will not open on RIGHT',
-  KEYS.UP, {},
-  assertNotOpened
+    'disabled element will not open on RIGHT',
+    KEYS.UP,
+    {},
+    assertNotOpened
 );

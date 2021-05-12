@@ -1,10 +1,10 @@
-@import "/variable";
-@import "/mixin";
+@import '/variable';
+@import '/mixin';
 
 /*  Hero HEADER */
-.hero__header{
+.hero__header {
     height: 500px;
-    background-image: url(../img/pngtree-purple-watercolor-flowers-lace-floral-frame-main-illustration-background-image_159577.jpg);
+    background-image: url(../img/header-plain.png);
     background-position: center;
     background-size: cover;
 
@@ -13,7 +13,6 @@
         justify-content: center;
         transform: translateY(10rem);
         color: $orange;
-
     }
 }
 
@@ -21,18 +20,16 @@ body {
     overflow-x: hidden;
 }
 
-
 /*  COUNT SECTION*/
 
-.count__section  {
+.count__section {
     margin-top: 100px;
     margin-bottom: 100px;
     color: $brown;
 
-    p{
+    p {
         @include para();
     }
-
 }
 
 @media (max-width: 770px) {
@@ -41,17 +38,11 @@ body {
     }
 }
 
-
-
-
-
-
-
 /* =============ABOUT SECTION ======  */
 .about__section {
     padding-top: 50px;
 
-    a{
+    a {
         text-decoration: none;
         color: $black;
         font-weight: 500;
@@ -66,7 +57,7 @@ body {
         padding-top: 50px;
         color: $brown;
 
-        p{
+        p {
             @include para();
         }
     }
@@ -76,25 +67,13 @@ body {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 /* ============================ CONTACT SECTION ==========================  */
 
 .contact__section {
     padding-top: 50px;
     padding-bottom: 50px;
 
-    a{
+    a {
         text-decoration: none;
         color: $black;
         font-weight: 500;
@@ -105,30 +84,30 @@ body {
         }
     }
 
-      .contact_us {
-          padding-top: 60px;
-          color: $brown;
-      }
+    .contact_us {
+        padding-top: 60px;
+        color: $brown;
+    }
 
-      .contact{
-          img{
+    .contact {
+        img {
             margin-bottom: 20px;
-          }
-          span {
-              font-size: 22px;
-          }
-      }
+        }
+        span {
+            font-size: 22px;
+        }
+    }
 
-      .writeus{
-          h1{
-              float: right;
-          }
-          label{
-              font-size: 19px;
-              margin-bottom: 40px;
-          }
+    .writeus {
+        h1 {
+            float: right;
+        }
+        label {
+            font-size: 19px;
+            margin-bottom: 40px;
+        }
 
-          button {
+        button {
             background-color: $brown;
             color: white;
             border: none;
@@ -136,135 +115,112 @@ body {
             float: right;
         }
 
-          input[type="text"]{
-              width: 500px;
-             border: none; 
-             border-bottom: 2px solid $gray;
-             outline: none;
-          }
-
-          input[type="mail"]{
+        input[type='text'] {
             width: 500px;
-            border: none; 
+            border: none;
             border-bottom: 2px solid $gray;
             outline: none;
-         }
+        }
 
-         input[type="location"]{
+        input[type='mail'] {
             width: 500px;
-            border: none; 
+            border: none;
             border-bottom: 2px solid $gray;
             outline: none;
-         }
+        }
 
-         input[type="number"]{
+        input[type='location'] {
             width: 500px;
-            border: none; 
+            border: none;
             border-bottom: 2px solid $gray;
             outline: none;
-         }
-      }
+        }
 
-
-
+        input[type='number'] {
+            width: 500px;
+            border: none;
+            border-bottom: 2px solid $gray;
+            outline: none;
+        }
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*  ================================== PODUCT SECTION ================================ */
 .product__topic {
-  padding-top: 100px;
-  padding-bottom: 100px;
+    padding-top: 100px;
+    padding-bottom: 100px;
 
+    a {
+        color: $brown;
+        text-decoration: none;
 
-
-  a{
-      color: $brown;
-      text-decoration: none;
-
-      &:hover {
-          color: black;
-      }
-  }
-
-
-
-
-
-/* ============ flip ================ */
-.monthly__picks__box {
-    margin-top: 100px;
-}
-
-// .products__card{
-//     position: relative;
-//     margin-top: 100px;
-//     display: grid;
-//     grid-template-columns: 1fr 1fr 1fr;
-// }
-
-
-label {
-     margin-top: 15rem;
-    perspective: 1000px;
-    transform-style: preserve-3d;
-    display: block;
-    width: 300px;
-    height: 460px;
-    position: relative;
-    left: 50%;
-    top: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    cursor: pointer;
-}
-
-.card {
-    position: relative;
-    height: 100%;
-    width: 100%;
-    -webkit-transform-style: preserve-3d;
-    transform-style: preserve-3d;
-    -webkit-transition: all 600ms;
-    transition: all 600ms;
-    z-index: 20;
-
-    .front {
-        padding: 10px;
+        &:hover {
+            color: black;
+        }
     }
 
-    button{
-        background-color: $brown;
-        color: $white;
-        border: none;
-        padding: 10px 20px 10px 20px;
-    }
-    .more {
-        font-weight: bold;
-        color: $orange;
+    /* ============ flip ================ */
+    .monthly__picks__box {
+        margin-top: 100px;
     }
 
-    p{
-        font-weight: bold;
+    // .products__card{
+    //     position: relative;
+    //     margin-top: 100px;
+    //     display: grid;
+    //     grid-template-columns: 1fr 1fr 1fr;
+    // }
+
+    label {
+        margin-top: 15rem;
+        perspective: 1000px;
+        transform-style: preserve-3d;
+        display: block;
+        width: 300px;
+        height: 460px;
+        position: relative;
+        left: 50%;
+        top: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        cursor: pointer;
     }
-}
+
+    .card {
+        position: relative;
+        height: 100%;
+        width: 100%;
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+        -webkit-transition: all 600ms;
+        transition: all 600ms;
+        z-index: 20;
+
+        .front {
+            padding: 10px;
+        }
+
+        button {
+            background-color: $brown;
+            color: $white;
+            border: none;
+            padding: 10px 20px 10px 20px;
+        }
+        .more {
+            font-weight: bold;
+            color: $orange;
+        }
+
+        p {
+            font-weight: bold;
+        }
+    }
 
     .card div {
         position: relative;
         height: 100%;
         width: 100%;
-        background: #FFF;
+        background: #fff;
         text-align: center;
         // line-height: 20px;
         -webkit-backface-visibility: hidden;
@@ -273,62 +229,54 @@ label {
     }
 
     .card .back {
-       position: absolute;
+        position: absolute;
         background: $orange;
-        color: #FFF;
+        color: #fff;
         -webkit-transform: rotateX(180deg);
         transform: rotateX(180deg);
         text-align: left;
         padding: 20px;
     }
 
-label:hover .card {
-    // -webkit-transform: rotateX(20deg);
-    // transform: rotateX(20deg);
-    box-shadow: 0 20px 20px rgba(50,50,50,.2);
-}
+    label:hover .card {
+        // -webkit-transform: rotateX(20deg);
+        // transform: rotateX(20deg);
+        box-shadow: 0 20px 20px rgba(50, 50, 50, 0.2);
+    }
 
-input {
-    display: none;
-}
+    input {
+        display: none;
+    }
 
-:checked + .card {
-    transform: rotateX(180deg);
-    -webkit-transform: rotateX(180deg);
-}
+    :checked + .card {
+        transform: rotateX(180deg);
+        -webkit-transform: rotateX(180deg);
+    }
 
-label:hover :checked + .card {
-    // transform: rotateX(160deg);
-    // -webkit-transform: rotateX(160deg);
-    box-shadow: 0 20px 20px rgba(255,255,255,.2);
+    label:hover :checked + .card {
+        // transform: rotateX(160deg);
+        // -webkit-transform: rotateX(160deg);
+        box-shadow: 0 20px 20px rgba(255, 255, 255, 0.2);
+    }
 }
-
-}
-
 
 @media (max-width: 560px) {
-    .product__topic .header h4{
-      font-size: 16px;
-      font-weight: bold;
-  }
+    .product__topic .header h4 {
+        font-size: 16px;
+        font-weight: bold;
+    }
 }
-
-
-
 
 /*  =======================================================================
 ============================================ PAGE 3 HTML ========================================
 =======================
 ============================================================ */
 
-
- 
-
-.page3{
+.page3 {
     margin-top: 100px;
     margin-bottom: 100px;
 
-    a{
+    a {
         text-decoration: none;
         color: $black;
         font-weight: 500;
@@ -356,22 +304,17 @@ label:hover :checked + .card {
         }
     }
 
-    p{
+    p {
         @include para();
     }
 
     button {
         margin-top: 10px;
-        padding:  15px;
+        padding: 15px;
         border: none;
         outline: none;
     }
 }
-
-
-
-
-
 
 /*  =======================================================================
 ============================================ PAGE 4 HTML ========================================
@@ -379,56 +322,53 @@ label:hover :checked + .card {
 ============================================================ */
 
 .page4 {
-      
     .product__topic {
         margin-bottom: 10px;
     }
-   h2 {
-       color: $brown;
-   }
+    h2 {
+        color: $brown;
+    }
 
-   .instruction__box {
-       position: relative;
+    .instruction__box {
+        position: relative;
 
-       .box {
-           display: flex;
-           flex-direction: column;
-           justify-content: center;
-           height: 350px;
-           width: 270px;
+        .box {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 350px;
+            width: 270px;
             box-shadow: 2px 3px 10px 3px gray;
             margin: 30px auto;
             padding: 10px;
             border-radius: 10px;
 
-            .one, .two, .three, .four {
+            .one,
+            .two,
+            .three,
+            .four {
                 font-size: 3em;
                 font-weight: bold;
                 color: $brown;
             }
 
-            p{
+            p {
                 @include para();
                 line-height: 1;
                 text-align: center;
                 word-spacing: 2px;
             }
-       }
-   }
+        }
+    }
 
-   .customer__review {
-       margin-top: 50px;
+    .customer__review {
+        margin-top: 50px;
 
-       p{
-           font-size: 50px;
-           color: $brown;
-
-           a{
-               
-           }
-       }
-   }
-
+        p {
+            font-size: 50px;
+            color: $brown;
+        }
+    }
 }
 
 @media (max-width: 1186px) {
@@ -441,27 +381,20 @@ label:hover :checked + .card {
     }
 }
 
-
-
-
-
-
-
-
 /*  =======================================================================
 ============================================ PAGE 5 HTML ========================================
 =======================
 ============================================================ */
 
-.page5{
+.page5 {
     margin-top: 100px;
-    
-    p{
+
+    p {
         @include para();
     }
 
     .header {
-        a{
+        a {
             color: $brown;
             font-size: 22px;
             text-decoration: none;
@@ -472,7 +405,7 @@ label:hover :checked + .card {
         margin-top: 50px;
     }
 
-    ul li{
+    ul li {
         color: $brown;
         font-size: 18px;
         font-weight: 500;
@@ -487,17 +420,14 @@ label:hover :checked + .card {
             font-size: 21px;
         }
     }
-
 }
-
-
 
 /*  =======================================================================
 ============================================ PAGE 6 HTML ========================================
 =======================
 ============================================================ */
 
-.page6{
+.page6 {
     margin-top: 100px;
     a {
         color: $brown;
@@ -506,47 +436,43 @@ label:hover :checked + .card {
             color: black;
         }
     }
-    .teabags{
+    .teabags {
         color: $brown;
     }
     .content {
         margin-top: 50px;
     }
-.box {
-    height: 210px;
-    width: 260px;
-    box-shadow: 2px 3px 10px 3px gray;
-    margin: 10px auto;
-    text-align: center;
-    cursor: pointer;
+    .box {
+        height: 210px;
+        width: 260px;
+        box-shadow: 2px 3px 10px 3px gray;
+        margin: 10px auto;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    p {
+        @include para();
+        font-size: 16px;
+    }
 }
-
-p{
-    @include para();
-    font-size: 16px;
-}
-
-}
-
-
-
 
 /*  =======================================================================
 ============================================ PAGE 7 HTML ========================================
 =======================
 ============================================================ */
 
-.page7{
+.page7 {
     margin-top: 100px;
 
-    a{
+    a {
         color: $brown;
         text-decoration: none;
         &:hover {
             color: black;
         }
     }
-    p{
+    p {
         @include para();
         font-size: 16px;
     }
@@ -561,12 +487,12 @@ p{
         text-align: center;
         cursor: pointer;
     }
-    .box2{
+    .box2 {
         box-shadow: 2px 3px 10px 3px gray;
         padding: 20px;
 
         h2 {
-            color: $brown;  
+            color: $brown;
         }
 
         ul li {
