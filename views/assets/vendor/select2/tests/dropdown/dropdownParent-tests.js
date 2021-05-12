@@ -18,9 +18,12 @@ test('can be a selector string', function (assert) {
 
     var DropdownAdapter = Utils.Decorate(Dropdown, AttachBody);
 
-    var dropdown = new DropdownAdapter($select, new Options({
-        dropdownParent: '#parent'
-    }));
+    var dropdown = new DropdownAdapter(
+        $select,
+        new Options({
+            dropdownParent: '#parent',
+        })
+    );
 
     assert.equal(
         dropdown.$dropdownParent[0],
@@ -47,9 +50,12 @@ test('can be a jQuery object', function (assert) {
 
     var DropdownAdapter = Utils.Decorate(Dropdown, AttachBody);
 
-    var dropdown = new DropdownAdapter($select, new Options({
-        dropdownParent: $parent
-    }));
+    var dropdown = new DropdownAdapter(
+        $select,
+        new Options({
+            dropdownParent: $parent,
+        })
+    );
 
     assert.equal(
         dropdown.$dropdownParent[0],

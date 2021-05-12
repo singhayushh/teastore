@@ -19,7 +19,7 @@ test('The internal cache for the element is cleared', function (assert) {
     var $element = $('<select data-select2-id="test"></select>');
 
     Utils.__cache.test = {
-        'foo': 'bar'
+        foo: 'bar',
     };
 
     Utils.RemoveData($element[0]);

@@ -1,142 +1,145 @@
-define([
-  'require',
-  'jquery',
-  './defaults',
-  './utils'
-], function (require, $, Defaults, Utils) {
-  function Options (options, $element) {
-    this.options = options;
+define(['require', 'jquery', './defaults', './utils'], function (
+    require,
+    $,
+    Defaults,
+    Utils
+) {
+    function Options(options, $element) {
+        this.options = options;
 
-    if ($element != null) {
-      this.fromElement($element);
+        if ($element != null) {
+            this.fromElement($element);
+        }
+
+        if ($element != null) {
+            this.options = Defaults.applyFromElement(this.options, $element);
+        }
+
+        this.options = Defaults.apply(this.options);
+
+        if ($element && $element.is('input')) {
+            var InputCompat = require(this.get('amdBase') + 'compat/inputData');
+
+            this.options.dataAdapter = Utils.Decorate(
+                this.options.dataAdapter,
+                InputCompat
+            );
+        }
     }
 
-    if ($element != null) {
-      this.options = Defaults.applyFromElement(this.options, $element);
-    }
+    Options.prototype.fromElement = function ($e) {
+        var excludedData = ['select2'];
 
-    this.options = Defaults.apply(this.options);
+        if (this.options.multiple == null) {
+            this.options.multiple = $e.prop('multiple');
+        }
 
-    if ($element && $element.is('input')) {
-      var InputCompat = require(this.get('amdBase') + 'compat/inputData');
+        if (this.options.disabled == null) {
+            this.options.disabled = $e.prop('disabled');
+        }
 
-      this.options.dataAdapter = Utils.Decorate(
-        this.options.dataAdapter,
-        InputCompat
-      );
-    }
-  }
+        if (this.options.dir == null) {
+            if ($e.prop('dir')) {
+                this.options.dir = $e.prop('dir');
+            } else if ($e.closest('[dir]').prop('dir')) {
+                this.options.dir = $e.closest('[dir]').prop('dir');
+            } else {
+                this.options.dir = 'ltr';
+            }
+        }
 
-  Options.prototype.fromElement = function ($e) {
-    var excludedData = ['select2'];
+        $e.prop('disabled', this.options.disabled);
+        $e.prop('multiple', this.options.multiple);
 
-    if (this.options.multiple == null) {
-      this.options.multiple = $e.prop('multiple');
-    }
+        if (Utils.GetData($e[0], 'select2Tags')) {
+            if (this.options.debug && window.console && console.warn) {
+                console.warn(
+                    'Select2: The `data-select2-tags` attribute has been changed to ' +
+                        'use the `data-data` and `data-tags="true"` attributes and will be ' +
+                        'removed in future versions of Select2.'
+                );
+            }
 
-    if (this.options.disabled == null) {
-      this.options.disabled = $e.prop('disabled');
-    }
+            Utils.StoreData($e[0], 'data', Utils.GetData($e[0], 'select2Tags'));
+            Utils.StoreData($e[0], 'tags', true);
+        }
 
-    if (this.options.dir == null) {
-      if ($e.prop('dir')) {
-        this.options.dir = $e.prop('dir');
-      } else if ($e.closest('[dir]').prop('dir')) {
-        this.options.dir = $e.closest('[dir]').prop('dir');
-      } else {
-        this.options.dir = 'ltr';
-      }
-    }
+        if (Utils.GetData($e[0], 'ajaxUrl')) {
+            if (this.options.debug && window.console && console.warn) {
+                console.warn(
+                    'Select2: The `data-ajax-url` attribute has been changed to ' +
+                        '`data-ajax--url` and support for the old attribute will be removed' +
+                        ' in future versions of Select2.'
+                );
+            }
 
-    $e.prop('disabled', this.options.disabled);
-    $e.prop('multiple', this.options.multiple);
+            $e.attr('ajax--url', Utils.GetData($e[0], 'ajaxUrl'));
+            Utils.StoreData($e[0], 'ajax-Url', Utils.GetData($e[0], 'ajaxUrl'));
+        }
 
-    if (Utils.GetData($e[0], 'select2Tags')) {
-      if (this.options.debug && window.console && console.warn) {
-        console.warn(
-          'Select2: The `data-select2-tags` attribute has been changed to ' +
-          'use the `data-data` and `data-tags="true"` attributes and will be ' +
-          'removed in future versions of Select2.'
-        );
-      }
+        var dataset = {};
 
-      Utils.StoreData($e[0], 'data', Utils.GetData($e[0], 'select2Tags'));
-      Utils.StoreData($e[0], 'tags', true);
-    }
+        function upperCaseLetter(_, letter) {
+            return letter.toUpperCase();
+        }
 
-    if (Utils.GetData($e[0], 'ajaxUrl')) {
-      if (this.options.debug && window.console && console.warn) {
-        console.warn(
-          'Select2: The `data-ajax-url` attribute has been changed to ' +
-          '`data-ajax--url` and support for the old attribute will be removed' +
-          ' in future versions of Select2.'
-        );
-      }
+        // Pre-load all of the attributes which are prefixed with `data-`
+        for (var attr = 0; attr < $e[0].attributes.length; attr++) {
+            var attributeName = $e[0].attributes[attr].name;
+            var prefix = 'data-';
 
-      $e.attr('ajax--url', Utils.GetData($e[0], 'ajaxUrl'));
-      Utils.StoreData($e[0], 'ajax-Url', Utils.GetData($e[0], 'ajaxUrl'));
-    }
+            if (attributeName.substr(0, prefix.length) == prefix) {
+                // Get the contents of the attribute after `data-`
+                var dataName = attributeName.substring(prefix.length);
 
-    var dataset = {};
+                // Get the data contents from the consistent source
+                // This is more than likely the jQuery data helper
+                var dataValue = Utils.GetData($e[0], dataName);
 
-    function upperCaseLetter(_, letter) {
-      return letter.toUpperCase();
-    }
+                // camelCase the attribute name to match the spec
+                var camelDataName = dataName.replace(
+                    /-([a-z])/g,
+                    upperCaseLetter
+                );
 
-    // Pre-load all of the attributes which are prefixed with `data-`
-    for (var attr = 0; attr < $e[0].attributes.length; attr++) {
-      var attributeName = $e[0].attributes[attr].name;
-      var prefix = 'data-';
+                // Store the data attribute contents into the dataset since
+                dataset[camelDataName] = dataValue;
+            }
+        }
 
-      if (attributeName.substr(0, prefix.length) == prefix) {
-        // Get the contents of the attribute after `data-`
-        var dataName = attributeName.substring(prefix.length);
+        // Prefer the element's `dataset` attribute if it exists
+        // jQuery 1.x does not correctly handle data attributes with multiple dashes
+        if ($.fn.jquery && $.fn.jquery.substr(0, 2) == '1.' && $e[0].dataset) {
+            dataset = $.extend(true, {}, $e[0].dataset, dataset);
+        }
 
-        // Get the data contents from the consistent source
-        // This is more than likely the jQuery data helper
-        var dataValue = Utils.GetData($e[0], dataName);
+        // Prefer our internal data cache if it exists
+        var data = $.extend(true, {}, Utils.GetData($e[0]), dataset);
 
-        // camelCase the attribute name to match the spec
-        var camelDataName = dataName.replace(/-([a-z])/g, upperCaseLetter);
+        data = Utils._convertData(data);
 
-        // Store the data attribute contents into the dataset since
-        dataset[camelDataName] = dataValue;
-      }
-    }
+        for (var key in data) {
+            if ($.inArray(key, excludedData) > -1) {
+                continue;
+            }
 
-    // Prefer the element's `dataset` attribute if it exists
-    // jQuery 1.x does not correctly handle data attributes with multiple dashes
-    if ($.fn.jquery && $.fn.jquery.substr(0, 2) == '1.' && $e[0].dataset) {
-      dataset = $.extend(true, {}, $e[0].dataset, dataset);
-    }
+            if ($.isPlainObject(this.options[key])) {
+                $.extend(this.options[key], data[key]);
+            } else {
+                this.options[key] = data[key];
+            }
+        }
 
-    // Prefer our internal data cache if it exists
-    var data = $.extend(true, {}, Utils.GetData($e[0]), dataset);
+        return this;
+    };
 
-    data = Utils._convertData(data);
+    Options.prototype.get = function (key) {
+        return this.options[key];
+    };
 
-    for (var key in data) {
-      if ($.inArray(key, excludedData) > -1) {
-        continue;
-      }
+    Options.prototype.set = function (key, val) {
+        this.options[key] = val;
+    };
 
-      if ($.isPlainObject(this.options[key])) {
-        $.extend(this.options[key], data[key]);
-      } else {
-        this.options[key] = data[key];
-      }
-    }
-
-    return this;
-  };
-
-  Options.prototype.get = function (key) {
-    return this.options[key];
-  };
-
-  Options.prototype.set = function (key, val) {
-    this.options[key] = val;
-  };
-
-  return Options;
+    return Options;
 });

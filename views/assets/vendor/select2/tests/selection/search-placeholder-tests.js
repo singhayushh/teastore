@@ -9,25 +9,28 @@ var Options = require('select2/options');
 var Utils = require('select2/utils');
 
 var CustomSelection = Utils.Decorate(
-  Utils.Decorate(MultipleSelection, SelectionPlaceholder),
-  InlineSearch
+    Utils.Decorate(MultipleSelection, SelectionPlaceholder),
+    InlineSearch
 );
 
 test('width does not extend the search box', function (assert) {
     assert.expect(2);
 
     var $container = $(
-      '<div style="width: 100px; display: table-cell">' +
-      '<div style="width: 100%" ' +
-      'class="select2-container select2-container--default"></div>' +
-      '</div>'
+        '<div style="width: 100px; display: table-cell">' +
+            '<div style="width: 100%" ' +
+            'class="select2-container select2-container--default"></div>' +
+            '</div>'
     );
     var container = new MockContainer();
 
     var $element = $('#qunit-fixture .multiple');
-    var selection = new CustomSelection($element, new Options({
-      placeholder: 'Test placeholder'
-    }));
+    var selection = new CustomSelection(
+        $element,
+        new Options({
+            placeholder: 'Test placeholder',
+        })
+    );
 
     var $selection = selection.render();
     selection.bind(container, $container);
@@ -42,14 +45,14 @@ test('width does not extend the search box', function (assert) {
     var $search = $selection.find('input');
 
     assert.equal(
-      $search.outerWidth(),
-      60,
-      'The search should not be the entire width of the container'
+        $search.outerWidth(),
+        60,
+        'The search should not be the entire width of the container'
     );
 
     assert.equal(
-      $container.children().outerWidth(),
-      100,
-      'The container should be the width assigned to the parent in CSS'
+        $container.children().outerWidth(),
+        100,
+        'The container should be the width assigned to the parent in CSS'
     );
-  });
+});
