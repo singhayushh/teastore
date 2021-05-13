@@ -43,6 +43,7 @@ func (server *Server) InitDB(DbName, DbUser, DbPass, DbType, DbHost, DbPort stri
 // InitServer starts the backend server and configures html rendering
 func (server *Server) InitServer(Port string) {
 	server.Router = gin.New()
+	gin.SetMode(gin.ReleaseMode)
 
 	// GOTO routes.go/initRoutes()
 	server.initRoutes()

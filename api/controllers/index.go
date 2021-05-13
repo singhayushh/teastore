@@ -11,21 +11,21 @@ import (
 // RenderHome ... render index.html on path '/'
 func RenderHome(c *gin.Context) {
 	c.HTML(200, "index.html", gin.H{
-		"title": "Home | TEASTORE",
+		"title": "Teastore - Home",
 	})
 }
 
 // RenderAbout ... render about.html on path '/about'
 func RenderAbout(c *gin.Context) {
 	c.HTML(200, "about.html", gin.H{
-		"title": "About | TEASTORE",
+		"title": "Teastore - About Us",
 	})
 }
 
 // RenderContact ... render contact.html on path '/contact'
 func RenderContact(c *gin.Context) {
 	c.HTML(200, "contact.html", gin.H{
-		"title": "Contact | TEASTORE",
+		"title": "Teastore - Contact Us",
 	})
 }
 
@@ -43,31 +43,11 @@ func (server *Server) RenderDashboard(c *gin.Context) {
 		c.JSON(500, gin.H{"error": err})
 		return
 	}
-	users, err := user.FetchAll(server.DB)
-	if err != nil {
-		c.JSON(500, gin.H{"error": err})
-		return
-	}
-	product := models.Product{}
-	products, err := product.FetchAll(server.DB)
-	if err != nil {
-		c.JSON(500, gin.H{"error": err})
-		return
-	}
-	blog := models.Blog{}
-	blogs, err := blog.FetchAll(server.DB)
-	if err != nil {
-		c.JSON(500, gin.H{"error": err})
-		return
-	}
 	c.HTML(200, "dashboard.html", gin.H{
-		"title":        "Dashboard | TEASTORE",
-		"userCount":    len(*users),
-		"productCount": len(*products),
-		"blogCount":    len(*blogs),
-		"productHits":  100,
-		"blogHits":     100,
-		"websiteHits":  100,
-		"admin":        fetchedUser,
+		"title":       "Teastore - Dashboard",
+		"productHits": 100,
+		"blogHits":    100,
+		"websiteHits": 100,
+		"admin":       fetchedUser,
 	})
 }
