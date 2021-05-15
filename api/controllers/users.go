@@ -18,8 +18,9 @@ func (server *Server) RenderAllUsers(c *gin.Context) {
 		return
 	}
 	c.HTML(200, "listUser.html", gin.H{
-		"title": "Dashboard | TEASTORE",
-		"users": users,
+		"title":         "Dashboard | TEASTORE",
+		"users":         users,
+		"loadDatatable": true,
 	})
 }
 

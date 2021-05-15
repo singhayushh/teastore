@@ -11,61 +11,17 @@
         </center>
     </div>
 
-    <div class="row content">
+    <div class="row content blog-wrapper">
         <div class="col-lg-6 col-md-12 col-sm-12">
-            <h2>About Tea Variet 1</h2>
+            <h1>{{ .blogTitle }}</h1>
             <br />
-            <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                Asperiores ipsum eaque, debitis ullam pariatur recusandae nihil
-                consequuntur cum suscipit laboriosam? Maxime at debitis
-                accusantium eius doloribus dolore velit officia consectetur!
-            </p>
-            <ul>
-                <li>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Unde, eveniet quasi officiis ducimus cumque aut?
-                </li>
-                <li>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Unde, eveniet quasi officiis ducimus cumque aut?
-                </li>
-                <li>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Unde, eveniet quasi officiis ducimus cumque aut?
-                </li>
-            </ul>
+            {{ .blogContent}}
             <br />
-            <br />
-            <h2>Tasting Notes</h2>
-            <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Alias,
-                non iste. Doloremque dolorum magnam, ratione delectus magni
-                quasi repellendus maiores!
-            </p>
+            By: {{ .blogAuthor }}
         </div>
         <div class="col-lg-6 col-md-12 col-sm-12">
             <div class="box">
-                <p>
-                    <span>Aroma </span>Lorem ipsum dolor sit amet consectetur
-                    adipisicing elit. Incidunt, pariatur quasi sit soluta minima
-                    excepturi?
-                </p>
-                <br />
-                <p>
-                    <span>Complements </span>Lorem ipsum dolor sit amet
-                    consectetur.
-                </p>
-                <br />
-                <p>
-                    <span>Health Benefit </span>Lorem ipsum dolor sit amet
-                    consectetur, adipisicing elit. Excepturi, modi? Voluptatum
-                    ex magni a?
-                </p>
-                <br />
-                <p><span>Coffeine Content </span> Mediuam</p>
-                <br />
-                <p><span>Appearance </span>dark Brown</p>
+                <img src="{{ .blogCover }}" alt="">
             </div>
         </div>
     </div>

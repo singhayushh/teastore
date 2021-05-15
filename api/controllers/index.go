@@ -11,21 +11,21 @@ import (
 // RenderHome ... render index.html on path '/'
 func RenderHome(c *gin.Context) {
 	c.HTML(200, "index.html", gin.H{
-		"title": "Home | TEASTORE",
+		"title": "Teastore - Home",
 	})
 }
 
 // RenderAbout ... render about.html on path '/about'
 func RenderAbout(c *gin.Context) {
 	c.HTML(200, "about.html", gin.H{
-		"title": "About | TEASTORE",
+		"title": "Teastore - About Us",
 	})
 }
 
 // RenderContact ... render contact.html on path '/contact'
 func RenderContact(c *gin.Context) {
 	c.HTML(200, "contact.html", gin.H{
-		"title": "Contact | TEASTORE",
+		"title": "Teastore - Contact Us",
 	})
 }
 
@@ -61,7 +61,7 @@ func (server *Server) RenderDashboard(c *gin.Context) {
 		return
 	}
 	c.HTML(200, "dashboard.html", gin.H{
-		"title":        "Dashboard | TEASTORE",
+		"title":        "Teastore - Dashboard",
 		"userCount":    len(*users),
 		"productCount": len(*products),
 		"blogCount":    len(*blogs),
