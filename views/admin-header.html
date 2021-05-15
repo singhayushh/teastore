@@ -12,6 +12,12 @@
   <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
   <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
   <link href="/css/ruang-admin.min.css" rel="stylesheet" />
+  {{ if .loadDatatable }}
+  <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+  {{end}}
+  {{ if .loadEditor }}
+  <script src="https://cdn.ckeditor.com/ckeditor5/27.1.0/classic/ckeditor.js"></script>
+  {{end}}
 </head>
 
 <body id="page-top">
@@ -117,4 +123,3 @@
           </ul>
         </nav>
         <!-- Topbar -->
-      </div>

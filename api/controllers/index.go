@@ -43,11 +43,31 @@ func (server *Server) RenderDashboard(c *gin.Context) {
 		c.JSON(500, gin.H{"error": err})
 		return
 	}
+	users, err := user.FetchAll(server.DB)
+	if err != nil {
+		c.JSON(500, gin.H{"error": err})
+		return
+	}
+	product := models.Product{}
+	products, err := product.FetchAll(server.DB)
+	if err != nil {
+		c.JSON(500, gin.H{"error": err})
+		return
+	}
+	blog := models.Blog{}
+	blogs, err := blog.FetchAll(server.DB)
+	if err != nil {
+		c.JSON(500, gin.H{"error": err})
+		return
+	}
 	c.HTML(200, "dashboard.html", gin.H{
-		"title":       "Teastore - Dashboard",
-		"productHits": 100,
-		"blogHits":    100,
-		"websiteHits": 100,
-		"admin":       fetchedUser,
+		"title":        "Teastore - Dashboard",
+		"userCount":    len(*users),
+		"productCount": len(*products),
+		"blogCount":    len(*blogs),
+		"productHits":  100,
+		"blogHits":     100,
+		"websiteHits":  100,
+		"admin":        fetchedUser,
 	})
 }

@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"fmt"
+	"html/template"
 	"teastore/api/models"
 	"time"
 
@@ -18,8 +19,9 @@ func (server *Server) RenderAllBlogs(c *gin.Context) {
 	}
 
 	c.HTML(200, "listBlog.html", gin.H{
-		"title": "Blogs | TEASTORE",
-		"blogs": blogs,
+		"title":         "Blogs | TEASTORE",
+		"blogs":         blogs,
+		"loadDatatable": true,
 	})
 }
 
@@ -61,15 +63,19 @@ func (server *Server) RenderBlog(c *gin.Context) {
 		return
 	}
 	c.HTML(200, "viewBlog.html", gin.H{
-		"title": "Blog | TEASTORE",
-		"blogs": fetchedBlog,
+		"title":       "Blog | TEASTORE",
+		"blogTitle":   template.HTML(fetchedBlog.Title),
+		"blogContent": template.HTML(fetchedBlog.Text),
+		"blogCover":   fetchedBlog.Cover,
+		"blogAuthor":  fetchedBlog.Author,
 	})
 }
 
 // RenderAddBlog
 func (server *Server) RenderAddBlog(c *gin.Context) {
 	c.HTML(200, "addBlog.html", gin.H{
-		"title": "Add blog | Teastore",
+		"title":      "Add blog | Teastore",
+		"loadEditor": true,
 	})
 }
 
@@ -83,8 +89,9 @@ func (server *Server) RenderEditBlog(c *gin.Context) {
 		return
 	}
 	c.HTML(200, "editBlog.html", gin.H{
-		"title": "Edit blog | Teastore",
-		"blog":  fetchedBlog,
+		"title":      "Edit blog | Teastore",
+		"blog":       fetchedBlog,
+		"loadEditor": true,
 	})
 }
 

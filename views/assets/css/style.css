@@ -828,6 +828,23 @@ footer .wrapper {
     margin-top: 10px;
 }
 
-.link li a, .colophon a {
+.link li a,
+.colophon a {
     color: #663333;
+}
+
+.blog-wrapper p {
+    color: #000;
+    text-align: justify;
+    line-height: 1.5;
+}
+
+.blog-wrapper h1,
+.blog-wrapper h2,
+.blog-wrapper h3 {
+    color: #663333;
+}
+
+.blog-wrapper .box img {
+    width: 100%;
 }
