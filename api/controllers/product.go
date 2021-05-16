@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"fmt"
+	"html/template"
 	"strconv"
 	"teastore/api/models"
 	"time"
@@ -27,7 +28,8 @@ func (server *Server) RenderAllProducts(c *gin.Context) {
 // RenderAddProduct
 func (server *Server) RenderAddProduct(c *gin.Context) {
 	c.HTML(200, "addProduct.html", gin.H{
-		"title": "Add Product | Teastore",
+		"title":      "Add Product | Teastore",
+		"loadEditor": true,
 	})
 }
 
@@ -37,6 +39,7 @@ func (server *Server) AddProduct(c *gin.Context) {
 	var err error
 
 	if err := c.ShouldBind(&product); err != nil {
+		fmt.Println(err)
 		c.JSON(500, gin.H{"error": err})
 		return
 	}
@@ -44,6 +47,7 @@ func (server *Server) AddProduct(c *gin.Context) {
 	// Check if all parameters have been inputted
 	err = product.Validate("")
 	if err != nil {
+		fmt.Println(err)
 		c.JSON(500, gin.H{"error": err})
 		return
 	}
@@ -52,6 +56,7 @@ func (server *Server) AddProduct(c *gin.Context) {
 	_, err = product.Save(server.DB)
 
 	if err != nil {
+		fmt.Println(err)
 		c.JSON(500, gin.H{"error": err})
 		return
 	}
@@ -69,8 +74,11 @@ func (server *Server) RenderProduct(c *gin.Context) {
 		return
 	}
 	c.HTML(200, "viewProduct.html", gin.H{
-		"title":   "View Product | Teastore",
-		"product": fetchedProduct,
+		"title":              "View Product | Teastore",
+		"productName":        fetchedProduct.Name,
+		"productDescription": template.HTML(fetchedProduct.Description),
+		"productImage":       fetchedProduct.Image,
+		"inStock":            fetchedProduct.Stock,
 	})
 }
 
