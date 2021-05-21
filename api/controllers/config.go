@@ -45,7 +45,7 @@ func (server *Server) InitServer(Port string) {
 	server.Router = gin.New()
 	gin.SetMode(gin.ReleaseMode)
 
-	// GOTO routes.go/initRoutes()
+	// call ./routes.go to initialize routes
 	server.initRoutes()
 
 	// Load HTML and Static files

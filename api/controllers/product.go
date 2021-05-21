@@ -19,9 +19,10 @@ func (server *Server) RenderAllProducts(c *gin.Context) {
 		return
 	}
 
-	c.HTML(200, "listProduct.html", gin.H{
-		"title":    "Dashboard | TEASTORE",
-		"products": products,
+	c.HTML(200, "productDashboard.html", gin.H{
+		"title":         "Teastore - Products",
+		"products":      products,
+		"loadDatatable": true,
 	})
 }
 
@@ -61,7 +62,7 @@ func (server *Server) AddProduct(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{"message": "success"})
+	c.Redirect(301, "/products/view/"+product.Path)
 }
 
 // RenderProduct fetches data of the product by id (path)
@@ -92,14 +93,15 @@ func (server *Server) RenderEditProduct(c *gin.Context) {
 		return
 	}
 	c.HTML(200, "editProduct.html", gin.H{
-		"title":   "Edit Product | Teastore",
-		"product": fetchedProduct,
+		"title":      "Edit Product | Teastore",
+		"product":    fetchedProduct,
+		"loadEditor": true,
 	})
 }
 
 // UpdateProductByID updates the detials of the product
 func (server *Server) UpdateProductByID(c *gin.Context) {
-	uidInterface, _ := c.Get("uid")
+	uidInterface := c.Param("id")
 	id, err := strconv.ParseUint(fmt.Sprintf("%v", uidInterface), 10, 64)
 	if err != nil {
 		c.JSON(500, gin.H{"error": err})
@@ -118,12 +120,12 @@ func (server *Server) UpdateProductByID(c *gin.Context) {
 		fmt.Println(err)
 		return
 	}
-	c.JSON(200, gin.H{"updated": product})
+	c.Redirect(301, "/products/view/"+product.Path)
 }
 
 // DeleteProductByID removes the requested product
 func (server *Server) DeleteProductByID(c *gin.Context) {
-	uidInterface, _ := c.Get("uid")
+	uidInterface := c.Param("id")
 	id, err := strconv.ParseUint(fmt.Sprintf("%v", uidInterface), 10, 64)
 	if err != nil {
 		c.JSON(500, gin.H{"error": err})
@@ -140,5 +142,5 @@ func (server *Server) DeleteProductByID(c *gin.Context) {
 		fmt.Println(err)
 		return
 	}
-	c.JSON(200, gin.H{"updated": "success"})
+	c.Redirect(301, "/dashboard")
 }

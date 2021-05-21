@@ -1,4 +1,18 @@
+
+
 # About the project development
+
+## Instructions to run
+
+1. Install Postgres 13, Go 1.13+, Redis-Server
+2. Create postgres user, password, database for the project
+3. Open .env file and update all required details
+4. Make sure postgres and redis services are running
+5. Hit go run main.go in the terminal
+
+## Other Details
+
+<details> <summary>Expand</summary>
 
 > Some parts forked from @mindinvertory under MIT License
 
@@ -71,7 +85,4 @@ Contains the HTML templates used in your project
 
 Contains environment variables.
 
-<!--
- superadmin@teastore.in
- ac6Y@KaG
--->
+</details>

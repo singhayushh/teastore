@@ -3,6 +3,7 @@ package controllers
 import (
 	"fmt"
 	"html/template"
+	"strconv"
 	"teastore/api/models"
 	"time"
 
@@ -18,7 +19,7 @@ func (server *Server) RenderAllBlogs(c *gin.Context) {
 		return
 	}
 
-	c.HTML(200, "listBlog.html", gin.H{
+	c.HTML(200, "blogDashboard.html", gin.H{
 		"title":         "Blogs | TEASTORE",
 		"blogs":         blogs,
 		"loadDatatable": true,
@@ -32,6 +33,7 @@ func (server *Server) CreateBlog(c *gin.Context) {
 
 	if err := c.ShouldBind(&blog); err != nil {
 		c.JSON(500, gin.H{"error": err})
+		fmt.Println(err)
 		return
 	}
 
@@ -39,6 +41,7 @@ func (server *Server) CreateBlog(c *gin.Context) {
 	err = blog.Validate("")
 	if err != nil {
 		c.JSON(500, gin.H{"error": err})
+		fmt.Println(err)
 		return
 	}
 
@@ -47,10 +50,11 @@ func (server *Server) CreateBlog(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(500, gin.H{"error": err})
+		fmt.Println(err)
 		return
 	}
 
-	c.JSON(200, gin.H{"message": "success"})
+	c.Redirect(301, "/blogs/view/"+blog.Path)
 }
 
 // RenderBlog fetches data of the blog by id
@@ -97,6 +101,12 @@ func (server *Server) RenderEditBlog(c *gin.Context) {
 
 // UpdateBlogByID updates the detials of the blog
 func (server *Server) UpdateBlogByID(c *gin.Context) {
+	uidInterface := c.Param("id")
+	id, err := strconv.ParseUint(fmt.Sprintf("%v", uidInterface), 10, 64)
+	if err != nil {
+		c.JSON(500, gin.H{"error": err})
+		return
+	}
 	blog := models.Blog{}
 
 	if err := c.ShouldBind(&blog); err != nil {
@@ -107,7 +117,7 @@ func (server *Server) UpdateBlogByID(c *gin.Context) {
 	currentTime := time.Now()
 	blog.UpdatedAt = currentTime.Format("2006-01-02")
 
-	_, err := blog.Update(server.DB, blog.ID)
+	_, err = blog.Update(server.DB, id)
 
 	if err != nil {
 		c.JSON(500, gin.H{"error": err})
@@ -115,7 +125,7 @@ func (server *Server) UpdateBlogByID(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{"updated": blog})
+	c.Redirect(301, "/blogs/view/"+blog.Path)
 }
 
 // DeleteBlogByID removes the requested blog
@@ -135,5 +145,5 @@ func (server *Server) DeleteBlogByID(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{"updated": "success"})
+	c.Redirect(301, "/dashboard")
 }

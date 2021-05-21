@@ -2,10 +2,12 @@ package controllers
 
 import "teastore/api/middlewares"
 
+// initialize endpoints
 func (server *Server) initRoutes() {
 	server.Router.GET("/", RenderHome)
 	server.Router.GET("/about", RenderAbout)
 	server.Router.GET("/contact", RenderContact)
+
 	server.Router.GET("/dashboard", middlewares.AuthenticationMiddleware("Admin"), server.RenderDashboard)
 
 	userRoute := server.Router.Group("/user")

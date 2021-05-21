@@ -13,15 +13,17 @@ import (
 
 // User schema
 type User struct {
-	ID        uint64 `gorm:"primary_key;auto_increment" json:"id" form:"id"`
-	Type      string `gorm:"size:15;default:'Customer'" json:"type" form:"type"` // Either an Admin or Customer(by default)
-	Name      string `gorm:"size:255;not null;" json:"name" form:"name"`
-	Email     string `gorm:"size:100;not null;unique" json:"email" form:"email"`
-	Password  string `gorm:"size:100;not null;" json:"password" form:"password"`
-	Image     string `gorm:"default:'https://raw.githubusercontent.com/Simulacra-Technologies/teastore/master/templates/profile.png'" json:"image" form:"image"`
-	Address   string `gorm:"default:'Blank'" json:"address" form:"address"`
-	CreatedAt string `json:"created_at"`
-	UpdatedAt string `json:"updated_at"`
+	ID        uint64    `gorm:"primary_key;auto_increment" json:"id" form:"id"`
+	Type      string    `gorm:"size:15;default:'Customer'" json:"type" form:"type"` // Either an Admin or Customer(by default)
+	Name      string    `gorm:"size:255;not null;" json:"name" form:"name"`
+	Email     string    `gorm:"size:100;not null;unique" json:"email" form:"email"`
+	Password  string    `gorm:"size:100;not null;" json:"password" form:"password"`
+	Image     string    `gorm:"default:'https://raw.githubusercontent.com/Simulacra-Technologies/teastore/master/templates/profile.png'" json:"image" form:"image"`
+	Address   string    `gorm:"default:'Not Provided'" json:"address" form:"address"`
+	Token     string    `gorm:"size:64;default:'verified'" json:"token" form:"token"`
+	Cart      []Product `gorm:"many2many:cart;" json:"cart" form:"cart"`
+	CreatedAt string    `json:"created_at"`
+	UpdatedAt string    `json:"updated_at"`
 }
 
 // Hash - generates hash of the string passed as params and return the hashed password and err which is nil if no errors are thrown
@@ -170,7 +172,7 @@ func (user *User) Update(db *gorm.DB, uid uint64) (*User, error) {
 	return user, nil
 }
 
-// Delete is my favourite. Every user should use this.
+// Delete user by id
 func (user *User) Delete(db *gorm.DB, uid uint64) (int64, error) {
 
 	db = db.Debug().Model(&User{}).Where("id = ?", uid).Take(&User{}).Delete(&User{})
@@ -179,4 +181,21 @@ func (user *User) Delete(db *gorm.DB, uid uint64) (int64, error) {
 		return 0, db.Error
 	}
 	return db.RowsAffected, nil
+}
+
+// AddtoCart appends product id to cart array
+func (user *User) AddtoCart(db *gorm.DB, uid uint64, product Product) (*User, error) {
+
+	// Update the user
+	db.Debug().Model(&User{}).Association("Cart").Append(product)
+	if db.Error != nil {
+		return nil, db.Error
+	}
+
+	// Fetch the user
+	err := db.Debug().Model(&User{}).Where("id = ?", uid).Take(&user).Error
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
 }
