@@ -3,14 +3,14 @@
 <!-- Container Fluid-->
 <div class="container-fluid" id="container-wrapper">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Blogs</h1>
+        <h1 class="h3 mb-0 text-gray-800">Products</h1>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a href="/dashboard">Dashboard</a>
             </li>
-            <li class="breadcrumb-item">Blogs</li>
+            <li class="breadcrumb-item">Products</li>
             <li class="breadcrumb-item active" aria-current="page">
-                Add Blog
+                Add Product
             </li>
         </ol>
     </div>
@@ -21,38 +21,34 @@
             <div class="card mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">
-                        Add New Blog
+                        Add New Product
                     </h6>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="/blogs/add">
+                    <form method="POST" action="/products/add">
                         <div class="form-group">
-                            <label for="title">Title</label>
-                            <input type="text" class="form-control" id="title" placeholder="Title" name="title" />
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="title" placeholder="Oolong Tea 250gm"
+                                name="name" />
                         </div>
                         <div class="form-group">
-                            <label for="author">Author</label>
-                            <input type="text" class="form-control" id="author" placeholder="author" name="author" />
+                            <label for="image">Cover Image URL</label>
+                            <input type="text" class="form-control" id="image" placeholder="https://..." name="image" />
                         </div>
                         <div class="form-group">
-                            <label for="cover-image">Cover Image URL</label>
-                            <input type="text" class="form-control" id="cover-image" placeholder="https://..."
-                                name="cover" />
-                        </div>
-                        <div class="form-group">
-                            <label for="basic-url">Custom Blog URL</label>
+                            <label for="basic-url">Custom Product URL</label>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"
-                                        id="basic-addon3">https://teastore.tea/blogs/view/</span>
+                                        id="basic-addon3">https://teastore.tea/products/view/</span>
                                 </div>
                                 <input type="text" name="path" class="form-control" id="basic-url"
                                     aria-describedby="basic-addon3">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="exampleFormControlTextarea1">Blog Content</label>
-                            <textarea class="form-control" id="editor" rows="3" name="text"></textarea>
+                            <label for="exampleFormControlTextarea1">Product Description</label>
+                            <textarea class="form-control" id="editor" rows="3" name="description"></textarea>
                             <script>
                                 ClassicEditor
                                     .create(document.querySelector('#editor'))
@@ -61,6 +57,23 @@
                                     });
                             </script>
                         </div>
+                        <div class="form-group">
+                            <label for="price">Price</label>
+                            <input type="number" class="form-control" id="price" placeholder="Price in $"
+                                name="price" />
+                        </div>
+                        <div class="form-group">
+                            <label>Stock</label>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadio3" name="stock" class="custom-control-input">
+                                <label class="custom-control-label" for="customRadio3">In Stock</label>
+                            </div>
+                        </div>
+                        <!-- <div class="form-group">
+                            <label for="exampleFormControlReadonly">Readonly</label>
+                            <input class="form-control" type="text" placeholder="Readonly input here..."
+                                id="exampleFormControlReadonly" readonly />
+                        </div> -->
                         <button type="submit" class="btn btn-primary mb-1">Create</button>
                     </form>
                 </div>

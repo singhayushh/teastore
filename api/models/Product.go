@@ -14,7 +14,7 @@ import (
 // Product schema - CUD to admin only
 type Product struct {
 	ID          uint64 `gorm:"primary_key;auto_increment" json:"id" form:"id"`
-	Path        string `gorm:"size:6;unique" json:"path" form:"path"`
+	Path        string `gorm:"unique" json:"path" form:"path"`
 	Name        string `gorm:"size:255;not null;" json:"name" form:"name"`
 	Image       string `gorm:"default:'https://raw.githubusercontent.com/Simulacra-Technologies/teastore/master/templates/Image%20Not%20Available.png'" json:"image" form:"image"`
 	Description string `gorm:"not null;" json:"description" form:"description"`

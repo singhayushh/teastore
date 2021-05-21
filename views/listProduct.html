@@ -14,82 +14,20 @@
 
     <div class="container content">
         <div class="row">
+            {{ range $i,$j := .products }}
             <div class="col-lg-3 col-md-4 col-sm-12 box">
-                <img src="/img/logo/logo.png" height="100px" />
+                <img src="{{ $j.Image}}" height="200px" />
                 <br />
                 <p>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Officia, blanditiis.
+                    {{ $j.Name }}
                 </p>
+                <a href="/products/view/{{ $j.Path }}"><button>View More</button></a>
             </div>
-            <div class="col-lg-3 col-md-4 col-sm-12 box">
-                <img src="/img/logo/logo.png" height="100px" />
-                <br />
-                <p>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Officia, blanditiis.
-                </p>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-12 box">
-                <img src="/img/logo/logo.png" height="100px" />
-                <br />
-                <p>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Officia, blanditiis.
-                </p>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-12 box">
-                <img src="/img/logo/logo.png" height="100px" />
-                <br />
-                <p>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Officia, blanditiis.
-                </p>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-12 box">
-                <img src="/img/logo/logo.png" height="100px" />
-                <br />
-                <p>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Officia, blanditiis.
-                </p>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-12 box">
-                <img src="/img/logo/logo.png" height="100px" />
-                <br />
-                <p>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Officia, blanditiis.
-                </p>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-12 box">
-                <img src="/img/logo/logo.png" height="100px" />
-                <br />
-                <p>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Officia, blanditiis.
-                </p>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-12 box">
-                <img src="/img/logo/logo.png" height="100px" />
-                <br />
-                <p>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Officia, blanditiis.
-                </p>
-            </div>
+            {{ end }}
         </div>
     </div>
 
     <br /><br />
-    <center>
-        <div class="customer__review">
-            <h2>Customer Review</h2>
-            <a href="">
-                <p>↕</p>
-            </a>
-        </div>
-    </center>
 </div>
 
 {{ template "footer.html" .}}

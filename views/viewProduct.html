@@ -2,37 +2,28 @@
 
 <div class="container page3">
     <div class="links">
-        <a href="index.html">Home</a>&nbsp; > &nbsp;<a href="#"
-            >Tea Subdivision
+        <a href="index.html">Home</a>&nbsp; > &nbsp;<a href="#">Tea Subdivision
         </a>
-        &nbsp; > &nbsp; <a href="#">Tea Variety 1</a>
+        &nbsp; > &nbsp; <a href="#">{{ .productName }}</a>
     </div>
 
     <div class="row products">
         <div class="col-lg-6 col-md-12 col-sm-12">
             <div class="product">
-                <img src="/img/cutting pack.png" class="product__img" />
+                <img src="{{ .productImage }}" class="product__img" />
             </div>
         </div>
         <div class="col-lg-6 col-md-12 col-sm-12">
-            <h1>Tea Variety 1</h1>
+            <h1>{{ .productName }}</h1>
             <br />
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem
-                veritatis consequuntur minima itaque dicta iusto, cupiditate
-                laboriosam error dolore laborum?
-            </p>
-            <p>
-                beatae repellendus deserunt consequuntur quae repudiandae
-                perferendis atque!
-            </p>
+            {{ .productDescription }}
             <br />
-            <h3>RS 299</h3>
-            <h6>(MRP inclusive all tax)</h6>
-            <br />
-            <h4>Two Pack SIZES:</h4>
-            <a href="#"><button>Option 1</button></a>
-            <a href="#"><button>Option 2</button></a>
+            {{ if .inStock }}
+            <a href="#"><button>In Stock</button></a>
+            {{ end }}
+            {{ if not .inStock }}
+            <a href="#"><button>Out of Stock</button></a>
+            {{ end }}
         </div>
     </div>
 </div>
