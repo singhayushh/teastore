@@ -82,7 +82,7 @@ func (product *Product) FetchAll(db *gorm.DB) (*[]Product, error) {
 }
 
 // FetchByID needs the path to search for the corresponding product.
-func (product *Product) FetchByID(db *gorm.DB, path string) (*Product, error) {
+func (product *Product) FetchByPath(db *gorm.DB, path string) (*Product, error) {
 	err := db.Debug().Model(Product{}).Where("path = ?", path).Take(&product).Error
 	if err != nil {
 		return nil, err

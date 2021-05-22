@@ -23,6 +23,11 @@
                 </p>
                 <a href="/products/view/{{ $j.Path }}"><button>View More</button></a>
             </div>
+            <form action="/cart/add" method="POST">
+                <input type="hidden" value={{$j.ID}} name="id">
+                <input type="hidden" value={{$j.Path}} name="path">
+                <button type="submit">Add to Cart</button>
+            </form>
             {{ end }}
         </div>
     </div>

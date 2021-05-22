@@ -71,7 +71,7 @@ func (blog *Blog) FetchAll(db *gorm.DB) (*[]Blog, error) {
 }
 
 // FetchByID needs the path to search for the corresponding blog.
-func (blog *Blog) FetchByID(db *gorm.DB, path string) (*Blog, error) {
+func (blog *Blog) FetchByPath(db *gorm.DB, path string) (*Blog, error) {
 	err := db.Debug().Model(Blog{}).Where("path = ?", path).Take(&blog).Error
 	if err != nil {
 		return nil, err

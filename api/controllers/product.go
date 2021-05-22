@@ -10,8 +10,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// ShowAllProducts ...
-func (server *Server) RenderAllProducts(c *gin.Context) {
+// RenderProducts ...
+func (server *Server) RenderProducts(c *gin.Context) {
 	product := models.Product{}
 	products, err := product.FetchAll(server.DB)
 	if err != nil {
@@ -19,17 +19,50 @@ func (server *Server) RenderAllProducts(c *gin.Context) {
 		return
 	}
 
-	c.HTML(200, "productDashboard.html", gin.H{
-		"title":         "Teastore - Products",
-		"products":      products,
-		"loadDatatable": true,
+	c.HTML(200, "product_feed.html", gin.H{
+		"title":    "Teastore - Products",
+		"products": products,
 	})
 }
 
 // RenderAddProduct
 func (server *Server) RenderAddProduct(c *gin.Context) {
-	c.HTML(200, "addProduct.html", gin.H{
+	c.HTML(200, "product_add.html", gin.H{
 		"title":      "Add Product | Teastore",
+		"loadEditor": true,
+	})
+}
+
+// RenderProduct fetches data of the product by id (path)
+func (server *Server) RenderProductByPath(c *gin.Context) {
+	path := c.Param("path")
+	product := models.Product{}
+	fetchedProduct, err := product.FetchByPath(server.DB, path)
+	if err != nil {
+		c.JSON(500, gin.H{"error": err})
+		return
+	}
+	c.HTML(200, "product_view.html", gin.H{
+		"title":              "View Product | Teastore",
+		"productName":        fetchedProduct.Name,
+		"productDescription": template.HTML(fetchedProduct.Description),
+		"productImage":       fetchedProduct.Image,
+		"inStock":            fetchedProduct.Stock,
+	})
+}
+
+// RenderEditProduct fetches data of the product by id (path)
+func (server *Server) RenderEditProduct(c *gin.Context) {
+	path := c.Param("path")
+	product := models.Product{}
+	fetchedProduct, err := product.FetchByPath(server.DB, path)
+	if err != nil {
+		c.JSON(500, gin.H{"error": err})
+		return
+	}
+	c.HTML(200, "product_edit.html", gin.H{
+		"title":      "Edit Product | Teastore",
+		"product":    fetchedProduct,
 		"loadEditor": true,
 	})
 }
@@ -63,40 +96,6 @@ func (server *Server) AddProduct(c *gin.Context) {
 	}
 
 	c.Redirect(301, "/products/view/"+product.Path)
-}
-
-// RenderProduct fetches data of the product by id (path)
-func (server *Server) RenderProduct(c *gin.Context) {
-	id := c.Param("id")
-	product := models.Product{}
-	fetchedProduct, err := product.FetchByID(server.DB, id)
-	if err != nil {
-		c.JSON(500, gin.H{"error": err})
-		return
-	}
-	c.HTML(200, "viewProduct.html", gin.H{
-		"title":              "View Product | Teastore",
-		"productName":        fetchedProduct.Name,
-		"productDescription": template.HTML(fetchedProduct.Description),
-		"productImage":       fetchedProduct.Image,
-		"inStock":            fetchedProduct.Stock,
-	})
-}
-
-// RenderEditProduct fetches data of the product by id (path)
-func (server *Server) RenderEditProduct(c *gin.Context) {
-	id := c.Param("id")
-	product := models.Product{}
-	fetchedProduct, err := product.FetchByID(server.DB, id)
-	if err != nil {
-		c.JSON(500, gin.H{"error": err})
-		return
-	}
-	c.HTML(200, "editProduct.html", gin.H{
-		"title":      "Edit Product | Teastore",
-		"product":    fetchedProduct,
-		"loadEditor": true,
-	})
 }
 
 // UpdateProductByID updates the detials of the product
@@ -142,5 +141,5 @@ func (server *Server) DeleteProductByID(c *gin.Context) {
 		fmt.Println(err)
 		return
 	}
-	c.Redirect(301, "/dashboard")
+	c.Redirect(301, "/dashboard/products")
 }

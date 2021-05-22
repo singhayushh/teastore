@@ -2,6 +2,7 @@ package models
 
 import (
 	"errors"
+	"fmt"
 	"html"
 	"strings"
 	"time"
@@ -184,10 +185,10 @@ func (user *User) Delete(db *gorm.DB, uid uint64) (int64, error) {
 }
 
 // AddtoCart appends product id to cart array
-func (user *User) AddtoCart(db *gorm.DB, uid uint64, product Product) (*User, error) {
+func (user *User) AddtoCart(db *gorm.DB, uid uint64, product *Product) (*User, error) {
 
 	// Update the user
-	db.Debug().Model(&User{}).Association("Cart").Append(product)
+	db.Debug().Model(&User{}).Where("id = ?", uid).Association("Cart").Append(&product)
 	if db.Error != nil {
 		return nil, db.Error
 	}
@@ -198,4 +199,10 @@ func (user *User) AddtoCart(db *gorm.DB, uid uint64, product Product) (*User, er
 		return nil, err
 	}
 	return user, nil
+}
+
+func (user *User) FetchCart(db *gorm.DB, uid uint64) error {
+	result := db.Debug().Model(&User{}).Where("id = ?", uid).Association("Cart").Find(&user.Cart)
+	fmt.Println(result)
+	return nil
 }

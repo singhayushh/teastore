@@ -10,8 +10,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// RenderAllBlogs ...
-func (server *Server) RenderAllBlogs(c *gin.Context) {
+// RenderBlogs ...
+func (server *Server) RenderBlogs(c *gin.Context) {
 	blog := models.Blog{}
 	blogs, err := blog.FetchAll(server.DB)
 	if err != nil {
@@ -19,10 +19,51 @@ func (server *Server) RenderAllBlogs(c *gin.Context) {
 		return
 	}
 
-	c.HTML(200, "blogDashboard.html", gin.H{
-		"title":         "Blogs | TEASTORE",
-		"blogs":         blogs,
-		"loadDatatable": true,
+	c.HTML(200, "blog_feed.html", gin.H{
+		"title": "Teastore - Blogs",
+		"blogs": blogs,
+	})
+}
+
+// RenderBlog fetches data of the blog by path
+func (server *Server) RenderBlogByPath(c *gin.Context) {
+	path := c.Param("path")
+	blog := models.Blog{}
+	fetchedBlog, err := blog.FetchByPath(server.DB, path)
+	if err != nil {
+		c.JSON(500, gin.H{"error": err})
+		return
+	}
+	c.HTML(200, "blog_view.html", gin.H{
+		"title":       "Blog | TEASTORE",
+		"blogTitle":   template.HTML(fetchedBlog.Title),
+		"blogContent": template.HTML(fetchedBlog.Text),
+		"blogCover":   fetchedBlog.Cover,
+		"blogAuthor":  fetchedBlog.Author,
+	})
+}
+
+// RenderAddBlog
+func (server *Server) RenderAddBlog(c *gin.Context) {
+	c.HTML(200, "blog_add.html", gin.H{
+		"title":      "Add blog | Teastore",
+		"loadEditor": true,
+	})
+}
+
+// RenderEditBlog fetches data of the blog by id (path)
+func (server *Server) RenderEditBlog(c *gin.Context) {
+	path := c.Param("path")
+	blog := models.Blog{}
+	fetchedBlog, err := blog.FetchByPath(server.DB, path)
+	if err != nil {
+		c.JSON(500, gin.H{"error": err})
+		return
+	}
+	c.HTML(200, "blog_edit.html", gin.H{
+		"title":      "Edit blog | Teastore",
+		"blog":       fetchedBlog,
+		"loadEditor": true,
 	})
 }
 
@@ -55,48 +96,6 @@ func (server *Server) CreateBlog(c *gin.Context) {
 	}
 
 	c.Redirect(301, "/blogs/view/"+blog.Path)
-}
-
-// RenderBlog fetches data of the blog by id
-func (server *Server) RenderBlog(c *gin.Context) {
-	id := c.Param("id")
-	blog := models.Blog{}
-	fetchedBlog, err := blog.FetchByID(server.DB, id)
-	if err != nil {
-		c.JSON(500, gin.H{"error": err})
-		return
-	}
-	c.HTML(200, "viewBlog.html", gin.H{
-		"title":       "Blog | TEASTORE",
-		"blogTitle":   template.HTML(fetchedBlog.Title),
-		"blogContent": template.HTML(fetchedBlog.Text),
-		"blogCover":   fetchedBlog.Cover,
-		"blogAuthor":  fetchedBlog.Author,
-	})
-}
-
-// RenderAddBlog
-func (server *Server) RenderAddBlog(c *gin.Context) {
-	c.HTML(200, "addBlog.html", gin.H{
-		"title":      "Add blog | Teastore",
-		"loadEditor": true,
-	})
-}
-
-// RenderEditBlog fetches data of the blog by id (path)
-func (server *Server) RenderEditBlog(c *gin.Context) {
-	id := c.Param("id")
-	blog := models.Blog{}
-	fetchedBlog, err := blog.FetchByID(server.DB, id)
-	if err != nil {
-		c.JSON(500, gin.H{"error": err})
-		return
-	}
-	c.HTML(200, "editBlog.html", gin.H{
-		"title":      "Edit blog | Teastore",
-		"blog":       fetchedBlog,
-		"loadEditor": true,
-	})
 }
 
 // UpdateBlogByID updates the detials of the blog
@@ -145,5 +144,5 @@ func (server *Server) DeleteBlogByID(c *gin.Context) {
 		return
 	}
 
-	c.Redirect(301, "/dashboard")
+	c.Redirect(301, "/dashboard/blogs")
 }
