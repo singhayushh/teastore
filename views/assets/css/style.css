@@ -31,7 +31,7 @@
     color: #663333;
 }
 
-.hero__header button {
+.hero__header button, .page6 button {
     background-color: #663333;
     color: #ffffff;
     border: none;

@@ -1,5 +1,22 @@
 {{ template "header.html" .}}
 
-{{ .user.Cart }}
+<div class="container content page6">
+    <div class="row">
+        {{ range $i,$j := .cart.CartItems }}
+        <div class="col-lg-3 col-md-4 col-sm-12 box">
+            <img src="{{ $j.Product.Image}}" style="width: 100%;" />
+            <br />
+            <p>
+                {{ $j.Product.Name }}
+            </p>
+            <a><button>Quantity: {{ $j.Quantity }}</button></a>
+            <form>
+                <input type="hidden" value={{$j.ProductId}} name="pid">
+                <button type="submit">Remove from Cart</button>
+            </form>
+        </div>
+        {{ end }}
+    </div>
+</div>
 
 {{ template "footer.html" .}}

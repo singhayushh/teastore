@@ -24,7 +24,10 @@ func (server *Server) RenderCart(c *gin.Context) {
 		return
 	}
 
-	fmt.Println(fetchedCart)
+	c.HTML(200, "user_cart.html", gin.H{
+		"title": "Teastore - My Cart",
+		"cart":  fetchedCart,
+	})
 }
 
 // RenderCart
@@ -38,14 +41,14 @@ func (server *Server) AddtoCart(c *gin.Context) {
 	uid, err := strconv.ParseUint(fmt.Sprintf("%v", uidInterface), 10, 64)
 
 	if err != nil {
-		c.JSON(500, gin.H{"error": err})
-		return
+		fmt.Println(err)
+		c.Redirect(301, "/login")
 	}
 	user := models.User{}
 	_, err = user.FetchByID(server.DB, uid)
 	if err != nil {
-		c.JSON(500, gin.H{"error": err})
-		return
+		fmt.Println(err)
+		c.Redirect(301, "/login")
 	}
 
 	type cartItem struct {
@@ -61,8 +64,6 @@ func (server *Server) AddtoCart(c *gin.Context) {
 
 	newItem.UserID = uid
 
-	fmt.Println(newItem)
-
 	cart := models.Cart{}
 	err = cart.AddtoCart(server.DB, newItem.UserID, newItem.ProductID, newItem.Quantity)
 
@@ -72,14 +73,14 @@ func (server *Server) AddtoCart(c *gin.Context) {
 		return
 	}
 
-	getCart, err := cart.FetchCart(server.DB, uid)
+	_, err = cart.FetchCart(server.DB, uid)
 	if err != nil {
 		c.JSON(500, gin.H{"error": err})
 		fmt.Println(err)
 		return
 	}
 
-	c.JSON(200, gin.H{"updated": getCart})
+	c.Redirect(301, "/cart")
 }
 
 // RenderCart

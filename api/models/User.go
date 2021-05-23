@@ -89,6 +89,7 @@ func (user *User) Validate(action string) error {
 		user.ID = 0 // gets auto set anyway
 		user.UpdatedAt = currentTime.Format("2006-01-02")
 		user.CreatedAt = currentTime.Format("2006-01-02")
+		user.Type = "Admin"
 		if user.Name == "" {
 			return errors.New("name is required")
 		}
