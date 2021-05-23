@@ -1,8 +1,6 @@
 package models
 
 import (
-	"fmt"
-
 	"github.com/jinzhu/gorm"
 )
 
@@ -54,9 +52,7 @@ func (cart *Cart) AddtoCart(db *gorm.DB, uid uint64, pid uint64, qty int) error 
 		UserId:    uid,
 	}
 
-	getCart.CartItems = append(getCart.CartItems, item)
-
-	fmt.Println(getCart.CartItems)
+	getCart.CartItems = []CartItem{item}
 
 	db = db.Debug().Model(&Cart{}).Save(&getCart)
 
