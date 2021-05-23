@@ -17,12 +17,14 @@ func (server *Server) RenderCart(c *gin.Context) {
 		c.JSON(500, gin.H{"error": err})
 		return
 	}
-	user := models.User{}
-	_, err = user.FetchByID(server.DB, uid)
+	cart := models.Cart{}
+	fetchedCart, err := cart.FetchCart(server.DB, uid)
 	if err != nil {
 		c.JSON(500, gin.H{"error": err})
 		return
 	}
+
+	fmt.Println(fetchedCart)
 }
 
 // RenderCart
@@ -46,26 +48,23 @@ func (server *Server) AddtoCart(c *gin.Context) {
 		return
 	}
 
-	type productInfo struct {
-		ID   uint64 `gorm:"primary_key;auto_increment" json:"id" form:"id"`
-		Path string `gorm:"unique" json:"path" form:"path"`
+	type cartItem struct {
+		UserID    uint64 `gorm:"" json:"uid" form:"uid"`
+		ProductID uint64 `gorm:"" json:"pid" form:"pid"`
+		Quantity  int    `gorm:"" json:"qty" form:"qty"`
 	}
-	newProduct := new(productInfo)
-	if err := c.ShouldBind(&newProduct); err != nil {
+	newItem := new(cartItem)
+	if err := c.ShouldBind(&newItem); err != nil {
 		c.JSON(500, gin.H{"error": err})
 		return
 	}
 
-	product := models.Product{}
-	fetchedProduct, err := product.FetchByPath(server.DB, newProduct.Path)
-	if err != nil {
-		c.JSON(500, gin.H{"error": err})
-		return
-	}
+	newItem.UserID = uid
 
-	fmt.Println(fetchedProduct)
+	fmt.Println(newItem)
 
-	updatedUser, err := user.AddtoCart(server.DB, uid, fetchedProduct)
+	cart := models.Cart{}
+	err = cart.AddtoCart(server.DB, newItem.UserID, newItem.ProductID, newItem.Quantity)
 
 	if err != nil {
 		c.JSON(500, gin.H{"error": err})
@@ -73,7 +72,14 @@ func (server *Server) AddtoCart(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{"updated": updatedUser})
+	getCart, err := cart.FetchCart(server.DB, uid)
+	if err != nil {
+		c.JSON(500, gin.H{"error": err})
+		fmt.Println(err)
+		return
+	}
+
+	c.JSON(200, gin.H{"updated": getCart})
 }
 
 // RenderCart

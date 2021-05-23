@@ -81,6 +81,18 @@ func (product *Product) FetchAll(db *gorm.DB) (*[]Product, error) {
 	return &products, err
 }
 
+// FetchByPath needs the path to search for the corresponding product.
+func (product *Product) FetchByID(db *gorm.DB, pid uint64) (*Product, error) {
+	err := db.Debug().Model(Product{}).Where("id = ?", pid).Take(&product).Error
+	if err != nil {
+		return nil, err
+	}
+	if gorm.IsRecordNotFoundError(err) {
+		return nil, errors.New("Product Not Found")
+	}
+	return product, err
+}
+
 // FetchByID needs the path to search for the corresponding product.
 func (product *Product) FetchByPath(db *gorm.DB, path string) (*Product, error) {
 	err := db.Debug().Model(Product{}).Where("path = ?", path).Take(&product).Error

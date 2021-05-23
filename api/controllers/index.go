@@ -38,7 +38,7 @@ func RenderRegister(c *gin.Context) {
 
 // RenderLogin ...
 func RenderLogin(c *gin.Context) {
-	c.HTML(200, "publuc_login.html", gin.H{
+	c.HTML(200, "public_login.html", gin.H{
 		"title": "Login - Teastore",
 	})
 }
@@ -70,8 +70,19 @@ func (server *Server) Register(c *gin.Context) {
 	}
 
 	// _ to be changed and used for page rendering
-	_, err = user.Save(server.DB)
+	newUser, err := user.Save(server.DB)
 
+	if err != nil {
+		c.JSON(500, gin.H{"error": err})
+		return
+	}
+
+	cart := models.Cart{
+		UserId:    newUser.ID,
+		CartItems: []models.CartItem{},
+	}
+
+	_, err = cart.Save(server.DB)
 	if err != nil {
 		c.JSON(500, gin.H{"error": err})
 		return

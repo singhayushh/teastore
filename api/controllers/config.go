@@ -36,7 +36,7 @@ func (server *Server) InitDB(DbName, DbUser, DbPass, DbType, DbHost, DbPort stri
 	}
 
 	// Models to be placed in automigrate() params
-	server.DB.Debug().AutoMigrate(&models.User{}, &models.Product{}, &models.Blog{})
+	server.DB.Debug().AutoMigrate(&models.User{}, &models.Product{}, &models.Blog{}, &models.Cart{}, &models.CartItem{})
 
 }
 

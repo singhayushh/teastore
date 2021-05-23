@@ -95,7 +95,7 @@ func (server *Server) AddProduct(c *gin.Context) {
 		return
 	}
 
-	c.Redirect(301, "/products/view/"+product.Path)
+	c.Redirect(301, "/product/view/"+product.Path)
 }
 
 // UpdateProductByID updates the detials of the product
@@ -119,7 +119,7 @@ func (server *Server) UpdateProductByID(c *gin.Context) {
 		fmt.Println(err)
 		return
 	}
-	c.Redirect(301, "/products/view/"+product.Path)
+	c.Redirect(301, "/product/view/"+product.Path)
 }
 
 // DeleteProductByID removes the requested product
